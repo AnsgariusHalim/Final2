@@ -179,14 +179,13 @@ button {
   }
 
 .bottom {
-    display: flex;
-    
+    display: flex; 
     justify-content: center;
     position: absolute;
     bottom: 0;
     align-items: center;
      /* 可以根据需要调整 */
-    left:40%;
+    left:35%;
     gap: 20px;
    
     
