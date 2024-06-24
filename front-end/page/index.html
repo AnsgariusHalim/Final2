@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="indexjs.javascript"></script>
+
+    <title>説故事</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="Navigationbar">
+        <input type="checkbox" id="menuToggle">
+        <label class="menu" for="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+            
+            <ul class="sidebar" id="sidebar">
+                <li><a href="#home">主頁</a></li>
+                <li><a href="#services">訂閲項目</a></li>
+                <li><a href="#Portfolio">作品集</a></li> 
+                <li><a href="#Portfolio">瀏覽歷史</a></li>
+            </ul>
+        </label>
+        <form>
+            <button onClick="window.location.reload();">
+                <img src="pictures/説故事.png" alt="説故事">
+            </button>
+        </form>
+
+        <form id="searchbar"> 
+            <input type="search" id="search" name="q" placeholder="搜索...">
+            <button>Search</button>
+          </form>
+
+          <div class="navbutton">
+            <button>登入</button>
+            <button>注冊</button>
+        </div>
+    </div>
+
+    
+
+
+ 
+    <div class="container">
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+    </div>
+
+    
+    <div class="black">
+        <form class="bottom" >
+        <button type ="button">上一頁</button>
+        
+        <input type="number" min="1" placeholder="頁">
+        <button type ="button">完成</button>
+            
+        <button type ="button">下一頁</button>
+       
+
+        </form>
+    </div>
+
+   
+
+
+    
+</body>
+</html>
