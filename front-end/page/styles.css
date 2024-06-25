@@ -124,58 +124,24 @@ body{
 }
 
 .bottom {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 3fr));
+  display: flex;
+  
   justify-content: center;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  width: 100%;
-  left:20%;
-  padding: 20px 0; /* 可以根据需要调整 */
+  align-items: center;
+   /* 可以根据需要调整 */
+  left:40%;
+  gap: 20px;
  
   
 }
+
+
   
 
 
-.bottom button {
-  position: relative;
-  background-image: linear-gradient(to bottom left, #060606, white);
-  color: white;
-  padding: 10px 10px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  width: 80px;
-  height: 30px;
-  text-align: center; /* 水平居中 */
-  overflow-y: hidden;
-  grid-column: span 3;
-  margin:20px;
-  
-  
- 
-}
 
-.bottom button::before {
-  content: '';
-  position: absolute; /* 将伪元素相对于按钮进行绝对定位 */
-  width: 100%;
-  height: 0%;
-  left: 0;
-  top: 0;
-  border-radius: 0 0 50% 50%;
-  transition: .2s;
-  background-color: #201f1f;
-  opacity: 0.3;
-  
-  
-}
-
-.bottom button:hover::before {
-  /* 其他悬停时的样式 */
-  height: 120%; /* 鼠标悬停时的高度 */
-}
 
 .page{
   background-color: #C3B7CB;
@@ -282,17 +248,6 @@ input[type="number"]::placeholder {
   
 }
 
-#save button:hover::before {
-  /* 其他悬停时的样式 */
-  height: 120%; /* 鼠标悬停时的高度 */
-}
-
-#save{
-  display: block;
-  position: absolute;
-  right:10px;
-  bottom: 10px;
-}
 
 #register{
   display:grid;
@@ -300,7 +255,8 @@ input[type="number"]::placeholder {
   position: relative;
 }
 
-button{
+
+.black button{
   position: relative;
   background-image: linear-gradient(to bottom left, #060606, white);
   color: white;
@@ -315,7 +271,7 @@ button{
   
 }
 
-button::before {
+.black button::before {
   content: '';
   position: absolute; /* 将伪元素相对于按钮进行绝对定位 */
   width: 100%;
@@ -330,7 +286,7 @@ button::before {
   
 }
 
-button:hover::before {
+.black button:hover::before {
   /* 其他悬停时的样式 */
   height: 120%; /* 鼠标悬停时的高度 */
 }

@@ -3,12 +3,12 @@
         <title>
             説故事
         </title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="register.css">
     </head>
 
     <body>
         <div class="Navigationbar">
-            <a href="url"><img src="説故事.png"></a>
+            <a href="url"><img src="pictures\説故事.png"></a>
 
         </div>
         <div id="register">
@@ -37,13 +37,6 @@
                     </span>
 
                 <br>
-
-                <span class="space">
-                    <label for="age"><b>用戶年齡：</b></label>
-                    <input id ="age" type="text" required placeholder="請輸入年齡"/>
-                    </span>
-
-                <br>
                 
                 <span class="space">
                 <label for="account"><b>賬戶名稱：</b></label>
@@ -56,13 +49,21 @@
                 <label for="password" ><b>賬戶密碼：</b></label>
                 <input id ="password" type="password" required placeholder="請輸入賬號密碼"/>
                 </span>
-            </div>
+            
+            
+            <br>
+                
+            <span class="space">
+            <label for="cpassword" ><b>密碼確認：</b></label>
+            <input id ="cpassword" type="password" required placeholder="請再次輸入賬號密碼"/>
+            </span>
+        </div>
 
             <div id="uavatar">
-                <img id="user" src="user.png">
+                <img id="user" src="pictures\user.png">
             </div>
             
         </div>
-        <button  id="save" type ="button">完成</button>
+        <div class="black"><button  type ="button">完成</button></div>
     </body>
 </html>
