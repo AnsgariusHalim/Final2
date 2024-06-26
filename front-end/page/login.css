@@ -29,10 +29,12 @@ grid-template-columns: 50% 50%;
 
 }
 
-#content{
+#login{
   
     margin-left: 50px;
     padding: 10px;
+    display: grid;
+    grid-template-columns: 50% 50%;
     
    
   }
@@ -43,21 +45,17 @@ grid-template-columns: 50% 50%;
     display:block;
   }
   
-  #uavatar{
+
+
+#user{
     position: relative;
     display:grid;
     grid-column-start: 2;
-    justify-content: center;
+    justify-self: center;
     margin-top: 40px;
-   
-  }
-  
-  #user{
     width:400px;
     height:400px;
   }
-
-
 
 .black{
 position: absolute;
