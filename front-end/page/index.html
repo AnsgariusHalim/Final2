@@ -32,14 +32,37 @@
         <form id="searchbar"> 
             <input type="search" id="search" name="q" placeholder="搜索...">
             <button>Search</button>
-          </form>
+        </form>
+            
+            <div class="navbutton">
+                <button id="loginButton" onclick="location.href='login.html'">登入</button>
+            
+                <button id="registerButton" onclick="location.href='registration.html'">注冊</button>
+            
+            </div>
+            
+        
+        <div class="userlist">
+            <label for="userCheckbox">
+                <input type="checkbox" id="userCheckbox" name="userButton">
+                <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
+                
 
-          <div class="navbutton">
-            <button onclick="location.href='login.html'">登入</button>
+                <ul class="userSidebar" id="userSidebar">
+                    <li><a href="#profile">個人檔案</a></li>
+                    <li><a href="#mystory">我的故事</a></li>
+                    <li><a href="#setting">設定</a></li>
+                </ul>
+            </label>
             
-                <button onclick="location.href='registration.html'">注冊</button>
-            
+
         </div>
+       
+        <form action="getusername">
+        <h3 id="username">用戶名稱</h3>
+        </form>
+
+
     </div>
 
     
