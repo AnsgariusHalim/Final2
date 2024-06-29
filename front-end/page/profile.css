@@ -1,0 +1,228 @@
+body {
+    margin: 0;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.Navigationbar {
+    background-color: #c5c5c5;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position:relative;
+    background: linear-gradient( #c5c5c5,#C3B7CB);
+}
+
+
+
+
+
+.Navigationbar img {
+    margin: 15px;
+    cursor: pointer;
+    
+}
+
+.menu {
+    width: 30px;
+    height: 25px;
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu span {
+    background-color: #fff;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width: 100%;
+    height: 4px;
+}
+
+.menu span:nth-child(1) {
+    top: 0px;
+    left: 0px;
+}
+
+.menu span:nth-child(2) {
+    top: 13px;
+    left: 0px;
+}
+
+.menu span:nth-child(3) {
+    bottom: -5px;
+    left: 0px;
+    
+}
+
+.menu:hover span:nth-child(1) {
+    transform: scaleY(1.2);
+    left: -5px;
+}
+
+.menu:hover span:nth-child(2) {
+    transform: rotate(5deg) scaleY(1.1);
+}
+
+.menu:hover span:nth-child(3) {
+    transform: scaleY(1.2);
+    left: 5px;
+   
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(1) {
+    transform: rotate(30deg) translate(5px, 5px);
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(2) {
+    transform: scale(0);
+    transition-duration: 50ms;
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(3) {
+    transform: rotate(-30deg) translate(5px, -5px);
+}
+
+.sidebar {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    width: 200px;
+    height: auto;
+    background: var(--clr-white);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    box-shadow: var(--clr-red-dark);
+    transition: var(--transition);
+    transform: translate(-100%); /* 用此屬性控制縮放 */
+    border: 2px solid #c5c5c5; /* Add border */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    list-style: none;
+    z-index: 9999;
+    background-color: white;
+    
+}
+
+
+.show-sidebar {
+    transform: translate(0);
+}
+
+#searchbar{
+    position: absolute;
+    padding:25px;
+    right:200px;
+    
+    }
+    
+    #search{
+        
+        border:3px solid #EBE8EC;
+        border-radius: 20px;
+    }
+    
+    #searchbar button{
+    width:58px;
+    height: 23px;
+    background-color:white ;
+    border:3px solid #EBE8EC;
+    border-radius: 40%;
+    text-align: center;
+    cursor: pointer;
+    }
+    
+    .navbutton button{
+    font-size: large;
+    width:60px;
+    height: 40px;
+    background-color:#C3B7CB ;
+    border:3px solid #EBE8EC;
+    border-radius: 10px 10px 10px;
+    text-align: center;
+    padding:5px;
+    margin-top: 15px;
+    cursor: pointer;
+    
+    
+    
+    }
+    .userlist{
+   
+        position: absolute;
+        right:100px;
+    }
+    
+    .userlist img#userAvatar {
+        cursor: pointer; /* Example style */
+        position: relative;
+        bottom:5px;
+       
+    }
+    .userlist img#userAvatar:hover {
+      border-radius: 50%;
+      border:2px solid  #ffffff;
+        
+    }
+    
+    
+    .userSidebar a,.sidebar a{
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        text-align: center;
+        padding:10px;
+    }
+    .userSidebar {
+        display: none;  
+    }
+    
+    .show-userSidebar {
+        display: block;
+        position: absolute;
+        top: 52px;
+        width: 150px;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        z-index: 10000;
+        list-style: none;
+    }
+    
+    .userSidebar a:hover ,.sidebar a:hover{
+        color: #f1f1f1;
+    }
+    
+    .userSidebar li, .sidebar li {
+        border-bottom: 1px solid #c5c5c5; /* 添加边框使项分隔 */
+    }
+    
+    
+    ul{
+        padding-inline-start:0px;
+    }
+    
+    .Navigationbar h3{
+        position: absolute;
+        right: 10px;
+        margin:20px;
+        
+    }
+
+    .body1 {
+        display:block;
+        text-align: center;
+    }
