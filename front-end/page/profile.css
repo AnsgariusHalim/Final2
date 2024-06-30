@@ -225,4 +225,39 @@ input[type="checkbox"]:checked + label.menu span:nth-child(3) {
     .body1 {
         display:block;
         text-align: center;
+        border:2px solid black;
+        border-radius: 20%;
+        height:auto;
+        width:80%;
+        margin:4%;
+        margin-left: 10%;
+        padding:10px;
+    }
+
+    .body1 img{
+        width:20%;
+        border:4px solid #C3B7CB;
+        border-radius: 50%;
+        
+    }
+
+    .body1 input[type="text"]{
+        margin:5px;
+        background-color: #C3B7CB;
+        border-width: 2px;
+        width:fit-content;
+        height:20px;
+  
+    }
+
+    .body1 button{
+        background-color: #f1f1f1;
+        border:4px solid #EBE8EC;
+        border-radius: 30%;
+    }
+
+    .body1 button:hover{
+        
+        border:4px solid #C3B7CB;
+        
     }
