@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="indexjs.javascript"></script>
+    <script src="profile.javascript"></script>
 
     <title>説故事</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
     <div class="Navigationbar">
@@ -20,28 +20,16 @@
                 <li><a href="#home">主頁</a></li>
                 <li><a href="#tutorial">教學</a></li>
                 <li><a href="#Portfolio">精彩作品集</a></li> 
-                <li><a href="#Portfolio">關於我們</a></li>
+                <li><a href="#aboutus">關於我們</a></li>
             </ul>
         </label>
-        <form>
-            <button onClick="window.location.reload();">
-                <img src="pictures/説故事.png" alt="説故事">
-            </button>
-        </form>
+        <a href="index.html"><img src="pictures\説故事.png"></a>
 
         <form id="searchbar"> 
             <input type="search" id="search" name="q" placeholder="搜索...">
             <button>Search</button>
         </form>
-            
-            <div class="navbutton">
-                <button id="loginButton" onclick="location.href='login.html'">登入</button>
-            
-                <button id="registerButton" onclick="location.href='registration.html'">注冊</button>
-            
-            </div>
-            
-        
+
         <div class="userlist">
             <label for="userCheckbox">
                 <input type="checkbox" id="userCheckbox" name="userButton">
@@ -67,45 +55,29 @@
 
 
     </div>
-
     
+    <div class="body1">
+        <h1>個人檔案</h1>
+        <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
+        <form   action="getuserdata">
+            <h3>用戶名稱：
+            <input type="text" id ="account" name="username" placeholder="Loading...">
+        </h3>
 
+            <br>
+            <h3>用戶姓氏：
+            <input type="text" id ="name" name="userlastname" placeholder="Loading...">
+            </h3>
 
- 
-    <div class="container">
-        <span class="item">
-            <button type="button"   class="like"><img src="pictures\like.png"></button>
-            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
-        </span>
-
-        <span class="item">
-            <button type="button"   class="like"><img src="pictures\like.png"></button>
-            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
-        </span>
-
-        <span class="item">
-            <button type="button"   class="like"><img src="pictures\like.png"></button>
-            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
-        </span>
-    </div>
-
-    
-    <div class="black">
-        <form class="bottom" >
-        <button type ="button">上一頁</button>
-        
-        <input type="number" min="1" placeholder="頁">
-        <button type ="button">完成</button>
+            <br>
+            <h3> 用戶姓名：
+                <input type="text" id ="firstname" name="userfirstname" placeholder="Loading...">
+            </h3>
             
-        <button type ="button">下一頁</button>
-       
-
+            <br>
+            <button type="button" id="submitBtn">提交修改</button>
         </form>
     </div>
-
-   
-
-
     
 </body>
 </html>
