@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const accountInput = document.getElementById('account');
     const passwordInput = document.getElementById('password');
     const cpasswordInput = document.getElementById('cpassword');
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleCPassword = document.getElementById('toggleCPassword');
 
     const warnings = {
         surname: document.getElementById('surname-warning'),
@@ -35,6 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const validateUsername = (username) => {
         const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$/;
         return re.test(String(username));
+    };
+
+    const validatePassword = (password) => {
+        const re = /^(?=.*[A-Z])(?=.*\d.*\d)[A-Za-z\d]{1,}$/;
+        return re.test(password);
     };
 
     const showWarning = (input, message) => {
@@ -68,6 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const accountExists = await checkExisting('account', accountInput.value);
         if (accountExists) {
             showWarning('account', 'This username already exists');
+        }
+    });
+
+    passwordInput.addEventListener('input', () => {
+        hideWarning('password');
+        if (!validatePassword(passwordInput.value)) {
+            showWarning('password', 'Password must contain at least 1 capital letter and 2 numbers');
+        } else {
+            hideWarning('password');
         }
     });
 
@@ -113,6 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput.value;
         const cpassword = cpasswordInput.value;
 
+        if (!validatePassword(password)) {
+            showWarning('password', 'Password must contain at least 1 capital letter and 2 numbers');
+            return;
+        }
+
         if (password !== cpassword) {
             showWarning('password', 'Passwords do not match');
             showWarning('cpassword', 'Passwords do not match');
@@ -147,9 +168,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    window.togglePassword = () => {
-        const passwordFieldType = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', passwordFieldType);
-        cpasswordInput.setAttribute('type', passwordFieldType);
-    };
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.classList.toggle('fa-eye');
+        togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    toggleCPassword.addEventListener('click', () => {
+        const type = cpasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        cpasswordInput.setAttribute('type', type);
+        toggleCPassword.classList.toggle('fa-eye');
+        toggleCPassword.classList.toggle('fa-eye-slash');
+    });
 });
