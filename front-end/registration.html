@@ -52,7 +52,6 @@
             <span class="space">
                 <label for="password"><b>賬戶密碼：</b></label>
                 <input id="password" type="password" required placeholder="請輸入賬號密碼" />
-                <button type="button" onclick="togglePassword()">顯示/隱藏密碼</button>
                 <div class="warning" id="password-warning"></div>
             </span>
 
@@ -63,14 +62,20 @@
                 <input id="cpassword" type="password" required placeholder="請再次輸入賬號密碼" />
                 <div class="warning" id="cpassword-warning"></div>
             </span>
+
+            <br>
+
+            <button id="registerBtn" type="button">完成</button>
+            <br><br>
+            <a href="http://localhost:3001/auth/google" id="google-signin">
+                <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+                    alt="Sign in with Google">
+            </a>
         </div>
 
         <div id="uavatar">
             <img id="user" src="pictures/user.png" alt="User">
         </div>
-    </div>
-    <div class="black">
-        <button id="registerBtn" type="button">完成</button>
     </div>
 </body>
 

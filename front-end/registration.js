@@ -71,17 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    passwordInput.addEventListener('blur', () => {
-        hideWarning('password');
+    cpasswordInput.addEventListener('input', () => {
+        hideWarning('cpassword');
         if (passwordInput.value !== cpasswordInput.value) {
-            showWarning('password', 'Passwords do not match');
+            showWarning('cpassword', 'Passwords do not match');
+        } else {
+            hideWarning('cpassword');
         }
     });
 
     cpasswordInput.addEventListener('blur', () => {
-        hideWarning('cpassword');
         if (passwordInput.value !== cpasswordInput.value) {
             showWarning('cpassword', 'Passwords do not match');
+        } else {
+            hideWarning('cpassword');
         }
     });
 

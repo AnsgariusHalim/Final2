@@ -2,15 +2,36 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
+require('dotenv').config();
+require('./passport-setup');
 const registerUser = require('./registration');
-const User = require('./models/user'); // Ensure the path is correct
+const User = require('./models/user');
 
 const app = express();
 const port = 3001;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS
+app.use(cors());
+
+// Log all incoming requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/Account', {
@@ -41,6 +62,21 @@ app.post('/check-existence', async (req, res) => {
   }
 });
 
+// Google OAuth routes
+app.get('/auth/google', (req, res, next) => {
+  console.log('Auth Google route hit');
+  next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  failureRedirect: '/login'
+}), (req, res) => {
+  res.redirect('http://localhost:3000/index.html');
+});
+
+// Serve static files from front-end directory
+app.use(express.static('front-end'));
+
 // Default route handler for any other routes
 app.use((req, res) => {
   res.status(404).send('Not Found');
@@ -48,7 +84,7 @@ app.use((req, res) => {
 
 // Error handler middleware (optional)
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Error during processing:', err);
   res.status(500).send('Internal Server Error');
 });
 
