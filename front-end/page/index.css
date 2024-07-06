@@ -178,17 +178,50 @@ button {
   
   
 }
-
-.item{
-  position:relative;
-  height: 250px;
-  width:350px;
-  background-color: #EBE8EC;
-  border:#C3B7CB solid 15px;
-  gap:30px;
-  
+.delete-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1; /* 確保刪除按鈕在圖片前面 */
+    display: none; /* 初始隱藏 */
 }
-  
+.manage-button {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+
+.item {
+    position: relative;
+    height: 250px;
+    width: 350px;
+    background-color: #EBE8EC;
+    border: #C3B7CB solid 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* 確保內容不會溢出 */
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 設定 item 之間的間距 */
+}
+
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden; /* 確保圖片在容器內部 */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 使圖片填滿容器 */
+}
 
 
 
@@ -233,7 +266,7 @@ cursor: pointer;
 
 .navbutton{
     position: relative;
-    left: 1150px;
+    left: 1100px;
 }
 
 .userlist{
@@ -303,11 +336,92 @@ ul{
     margin:20px;
     display:none;
 }
+.userlist {
+    display: flex;
+    align-items: center;
+}
+#userAvatar {
+    width: 50px; /* 調整圖片大小 */
+    height: 50px;
+    position: absolute; /* 增加這一行 */
+    right: -350px; /* 增加這一行 */
+     /* 增加這一行 */
+}
 
+#username {
+    margin: 0;
+    padding: 0;
+    color: white; /* 設置字體顏色為白色 */
+}
 show-username, .show-userlist {
-    display:block;
+    display: inline-block;
 }
 
 .hide {
     display: none;
+}
+.large-text {
+    font-size: 30px; /* 調整字體大小 */
+    font-weight: bold; /* 可選，讓字體加粗 */
+    right: 50px;
+    
+}
+.plus-text {
+    font-size:40px; /* 調整字體大小 */
+    font-weight: bold; /* 可選，讓字體加粗 */
+   
+}
+
+.offset-right {
+    margin-left: 90px; /* 根據需要調整數值 */
+}
+.plus-right {
+    margin-left: 10px; /* 根據需要調整數值 */
+    background-color: #C3B7CB;
+    border: none;
+    border-radius: 10px;
+    padding: 3px 15px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+
+    border-radius: 20px; /* 設置圓角 */
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    display: inline-block;
+    
+}
+.right-align {
+    background-color: #C3B7CB;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin: 4px 2px;
+    right: 150px;
+    position: absolute;
+    border-radius: 20px; /* 設置圓角 */
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    display: inline-block;
+
+}
+.story-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.story-section span {
+    margin-left: 10px;
+}
+.image-name {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 5px;
+    z-index: 10;
+    width: 50px; /* 可以根據需要調整寬度 */
 }

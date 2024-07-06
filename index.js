@@ -4,16 +4,16 @@ const app = express();
 const port = 3000;
 
 // Serve static files from the front-end folder
-app.use(express.static(path.join(__dirname, 'front-end')));
+app.use(express.static(path.join(__dirname, 'front-end','page')));
 
 // Serve the main index.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'index.html'));
+  res.sendFile(path.join(__dirname, 'front-end','page' ,'index.html'));
 });
 
 // Endpoint to serve the homepage.html file
 app.get('/homepage.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'homepage.html'));
+  res.sendFile(path.join(__dirname, 'front-end','page','homepage.html'));
 });
 
 app.listen(port, () => {
