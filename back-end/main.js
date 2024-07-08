@@ -7,6 +7,7 @@ const session = require('express-session');
 require('dotenv').config();
 require('./passport-setup');
 const registerUser = require('./registration');
+const loginUser = require('./login'); // Adjusted the path
 const User = require('./models/user');
 
 const app = express();
@@ -34,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/Account', {
+mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -45,6 +46,9 @@ mongoose.connect('mongodb://localhost:27017/Account', {
 
 // Endpoint to handle registration
 app.post('/register', registerUser);
+
+// Endpoint to handle login
+app.post('/login', loginUser);
 
 // Endpoint to check if email or username already exists
 app.post('/check-existence', async (req, res) => {

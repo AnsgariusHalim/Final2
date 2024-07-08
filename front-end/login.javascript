@@ -1,27 +1,30 @@
-            function login() {
-                const account = document.getElementById('account').value;
-                const password = document.getElementById('password').value;
+function login() {
+    const account = document.getElementById('account').value;
+    const password = document.getElementById('password').value;
 
-                // Mock API call for demonstration
-                fetch('login_api_endpoint', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ account, password }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('登入成功');
-                        window.location.href = 'index.html';
-                        localStorage.setItem('loggedIn', 'true');
-                    } else {
-                        alert('登入失敗: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('登入失敗: 無法連接到伺服器');
-                });
+    fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ account, password })
+    }).then(response => response.json())
+        .then(data => {
+            if (data.message === 'Login successful') {
+                alert(data.message);
+                window.location.href = 'index.html'; // Redirect to homepage on successful login
+            } else {
+                alert(data.message);
             }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        });
+}
+
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    this.classList.toggle('fa-eye-slash');
+});
