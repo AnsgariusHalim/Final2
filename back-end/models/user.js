@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the user schema
 const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
@@ -50,5 +49,5 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-// Create and export the user model
 module.exports = mongoose.model('User', userSchema);
+
