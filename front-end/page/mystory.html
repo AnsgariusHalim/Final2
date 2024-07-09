@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="profile.js"></script>
-
+    <script src="mystory.js" defer></script> <!-- 確保文件名正確，並添加 defer 屬性 -->
     <title>説故事</title>
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="mystory.css">
+ 
 </head>
 <body>
     <div class="Navigationbar">
@@ -15,19 +15,23 @@
             <span></span>
             <span></span>
             <span></span>
-            
             <ul class="sidebar" id="sidebar">
                 <li><a href="#home">主頁</a></li>
                 <li><a href="#tutorial">教學</a></li>
-                <li><a href="#Portfolio">精彩作品集</a></li> 
-                <li><a href="#aboutus">關於我們</a></li>
+                <li><a href="#Portfolio">精彩作品集</a></li>
+                <li><a href="#about">關於我們</a></li>
             </ul>
         </label>
-        <a href="index.html"><img src="pictures\説故事.png"></a>
+        <form>
+            <button type="button" onclick="window.location.reload();">
+                <img src="pictures/説故事.png" alt="説故事">
+            </button>
+        </form>
 
-        <form id="searchbar"> 
+        
+        <form id="searchbar">
             <input type="search" id="search" name="q" placeholder="搜索...">
-            <button>Search</button>
+            <button type="button" id="searchButton">Search</button>
         </form>
 
         <div class="userlist">
@@ -48,36 +52,26 @@
             
 
         </div>
-       
         <form action="getusername">
-        <h3 id="username">用戶名稱</h3>
-        </form>
-
-
-    </div>
-    
-    <div class="body1">
-        <h1>個人檔案</h1>
-        <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
-        <form   action="getuserdata">
-            <h3>用戶名稱：
-            <input type="text" id ="account" name="username" placeholder="Loading...">
-        </h3>
-
-            <br>
-            <h3>用戶姓氏：
-            <input type="text" id ="name" name="userlastname" placeholder="Loading...">
-            </h3>
-
-            <br>
-            <h3> 用戶姓名：
-                <input type="text" id ="firstname" name="userfirstname" placeholder="Loading...">
-            </h3>
-            
-            <br>
-            <button type="button" id="submitBtn">提交修改</button>
+            <h3 id="username" class="username">用戶名稱</h3>        
         </form>
     </div>
-    
+
+    <div class="story-section">
+        <p id="myStory" class="large-text offset-right">我的故事</p> <!-- 添加 ID -->
+        <button id="newStoryButton" class="plus-text plus-right">+</button>  <!-- 添加 class -->
+        <button id="manageButton" class="right-align">管理</button>
+
+    </div>
+
+    <div class="container"></div>
+
+    <div class="black">
+        <form class="bottom">
+            <button type="button" id="prevPageButton">上一頁</button>
+            <input type="number" id="currentPage" min="1" value="1" readonly>
+            <button type="button" id="nextPageButton">下一頁</button>
+        </form>
+    </div>
 </body>
 </html>

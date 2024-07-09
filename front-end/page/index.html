@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="indexjs.js" defer></script> <!-- 確保文件名正確，並添加 defer 屬性 -->
+    <script src="indexjs.javascript"></script>
+
     <title>説故事</title>
     <link rel="stylesheet" href="index.css">
- 
 </head>
 <body>
     <div class="Navigationbar">
@@ -15,62 +15,97 @@
             <span></span>
             <span></span>
             <span></span>
+            
             <ul class="sidebar" id="sidebar">
                 <li><a href="#home">主頁</a></li>
                 <li><a href="#tutorial">教學</a></li>
-                <li><a href="#Portfolio">精彩作品集</a></li>
-                <li><a href="#about">關於我們</a></li>
+                <li><a href="#Portfolio">精彩作品集</a></li> 
+                <li><a href="#Portfolio">關於我們</a></li>
             </ul>
         </label>
         <form>
-            <button type="button" onclick="window.location.reload();">
+            <button onClick="window.location.reload();">
                 <img src="pictures/説故事.png" alt="説故事">
             </button>
         </form>
-        <form id="searchbar">
+
+        <form id="searchbar"> 
             <input type="search" id="search" name="q" placeholder="搜索...">
-            <button type="button" id="searchButton">Search</button>
+            <button>Search</button>
         </form>
-        <div class="navbutton">
-            <button id="loginButton" onclick="location.href='login.html'">登入</button>
-            <button id="registerButton" onclick="location.href='registration.html'">注冊</button>
-            <img id="userAvatar" src="pictures/user.png" alt="User Avatar">
-
-        </div>
-        <div class="userlist">
-            <label for="userCheckbox">
-                <input type="checkbox" id="userCheckbox" name="userButton">
-                <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
-                <ul class="userSidebar" id="userSidebar">
-                    <li><a href="#profile">個人檔案</a></li>
-                    <li><a href="#mystory">我的故事</a></li>
-                    <li><a href="#mysave">我的收藏</a></li>
-                    <li><a href="#mylike">我的喜歡</a></li>
-                    <li><a href="#setting">設定</a></li>
-                    <li><a href="#logout">登出</a></li>
-                </ul>
-            </label>
-        </div>
+            
+            <div class="navbutton">
+                <button id="loginButton" onclick="location.href='login.html'">登入</button>
+            
+                <button id="registerButton" onclick="location.href='registration.html'">注冊</button>
+            
+            </div>
+            
+        
+            <div class="userlist">
+                <label for="userCheckbox">
+                    <input type="checkbox" id="userCheckbox" name="userButton">
+                    <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
+                    
+    
+                    <ul class="userSidebar" id="userSidebar">
+                        <li><a href="#profile">個人檔案</a></li>
+                        <li><a href="#mystory">我的故事</a></li>
+                        <li><a href="#mysave">我的收藏</a></li>
+                        <li><a href="#mylike">我的喜歡</a></li>
+                        <li><a href="#setting">設定</a></li>
+                        <li><a href="#logout">登出</a></li>
+                    </ul>
+                </label>
+                
+    
+            </div>
+       
         <form action="getusername">
-            <h3 id="username" class="username">用戶名稱</h3>        
+        <h3 id="username">用戶名稱</h3>
         </form>
-    </div>
 
-    <div class="story-section">
-        <p id="myStory" class="large-text offset-right">我的故事</p> <!-- 添加 ID -->
-        <button id="newStoryButton" class="plus-text plus-right">+</button>  <!-- 添加 class -->
-        <button id="manageButton" class="right-align">管理</button>
 
     </div>
 
-    <div class="container"></div>
+    
 
+
+ 
+    <div class="container">
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+
+        <span class="item">
+            <button type="button"   class="like"><img src="pictures\like.png"></button>
+            <button type="button"   class="dislike"><img src="pictures\dislike.png"></button>
+        </span>
+    </div>
+
+    
     <div class="black">
-        <form class="bottom">
-            <button type="button" id="prevPageButton">上一頁</button>
-            <input type="number" id="currentPage" min="1" value="1" readonly>
-            <button type="button" id="nextPageButton">下一頁</button>
+        <form class="bottom" >
+        <button type ="button">上一頁</button>
+        
+        <input type="number" min="1" placeholder="頁">
+        <button type ="button">完成</button>
+            
+        <button type ="button">下一頁</button>
+       
+
         </form>
     </div>
+
+   
+
+
+    
 </body>
 </html>
