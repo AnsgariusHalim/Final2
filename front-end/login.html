@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>説故事</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="login.javascript" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="Navigationbar">
+        <a href="index.html"><img src="pictures/説故事.png" alt="Home"></a>
+    </div>
+    <div id="login">
+        <div id="content">
+            <h1>登入</h1>
+            <h3>請使用您的賬戶進行登入</h3>
+
+            <label for="account"><b>賬戶名稱：</b></label>
+            <input id="account" type="text" required placeholder="請輸入賬號" />
+
+            <br>
+
+            <span class="space">
+                <label for="password"><b>賬戶密碼：</b></label>
+                <div class="password-container">
+                    <input id="password" type="password" required placeholder="請輸入賬號密碼" />
+                    <i class="far fa-eye" id="togglePassword"></i>
+                </div>
+            </span>
+        </div>
+
+        <img id="user" src="pictures/user.png" alt="User">
+    </div>
+    <div class="black">
+        <button id="save" type="button" onclick="login()">登入</button>
+    </div>
+</body>
+
+</html>
