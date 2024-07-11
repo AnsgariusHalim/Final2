@@ -4,11 +4,11 @@ const app = express();
 const port = 3000;
 
 // Serve static files from the front-end folder
-app.use(express.static(path.join(__dirname, 'front-end','page')));
+app.use(express.static(path.join(__dirname, 'front-end')));
 
 // Serve the main index.html file for the root URL
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end','page' ,'index.html'));
+  res.sendFile(path.join(__dirname, 'front-end' ,'index.html'));
 });
 
 

@@ -215,27 +215,23 @@ text-align: center;
 cursor: pointer;
 }
 
-.navbutton button{
-font-size: large;
-width:60px;
-height: 40px;
-background-color:#C3B7CB ;
-border:3px solid #EBE8EC;
-border-radius: 10px 10px 10px;
-text-align: center;
-padding:5px;
-margin-top: 15px;
-cursor: pointer;
-
-
-
+.navbutton {
+    display: flex;
+    align-items: center;
 }
 
-.navbutton{
-    position: relative;
-    left: 1150px;
+.navbutton button {
+    font-size: large;
+    width: 60px;
+    height: 40px;
+    background-color: #C3B7CB;
+    border: 3px solid #EBE8EC;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
 }
-
 .userlist{
    
     position: absolute;

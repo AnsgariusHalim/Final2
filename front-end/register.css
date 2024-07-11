@@ -1,5 +1,10 @@
 body {
   margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
 }
 
 .Navigationbar {
@@ -9,7 +14,9 @@ body {
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   background: linear-gradient(#c5c5c5, #C3B7CB);
 }
 
@@ -17,86 +24,46 @@ body {
   margin: 15px;
 }
 
+#register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 70px); /* Subtract the height of the navigation bar */
+}
+
 #register {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Set a fixed width for the form */
 }
 
 #content {
-  margin-left: 50px;
   padding: 10px;
 }
 
-.space {
-  margin-top: 10px;
+.form-group {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   position: relative;
+  margin-bottom: 20px; /* Add space between form groups */
+}
+
+.form-group label {
+  margin-bottom: 5px;
 }
 
 .warning {
-  margin-left: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
   color: red;
   font-size: 0.9em;
-}
-
-#uavatar {
-  position: relative;
-  display: grid;
-  grid-column-start: 2;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-#user {
-  width: 400px;
-  height: 400px;
-}
-
-.black {
-  position: absolute;
-  bottom: 0px;
-  right: 20px;
-}
-
-.black button {
-  position: relative;
-  background-image: linear-gradient(to bottom left, #060606, white);
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  width: 80px;
-  height: 30px;
-  text-align: center;
-  overflow-y: hidden;
-  margin: 10px;
-}
-
-.black button::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 0%;
-  left: 0;
-  top: 0;
-  border-radius: 0 0 50% 50%;
-  transition: .2s;
-  background-color: #201f1f;
-  opacity: 0.3;
-}
-
-.black button:hover::before {
-  height: 120%;
-}
-
-input {
-  background-color: #C3B7CB;
-  border-width: 2px;
-  margin-right: 5px;
-  width: fit-content;
-  height: 20px;
 }
 
 .password-container {
@@ -114,4 +81,52 @@ input {
   position: absolute;
   right: 10px;
   cursor: pointer;
+}
+
+#uavatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#user {
+  width: 100px;
+  height: 100px;
+}
+
+input {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+button {
+  background-color: #28a745; /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 15px 32px; /* Padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Get it to fit in the same line */
+  font-size: 16px; /* Increase font size */
+  margin: 4px 2px; /* Some margin */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 5px; /* Rounded corners */
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #218838; /* Darker green on hover */
 }

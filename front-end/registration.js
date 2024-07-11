@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-    const surnameInput = document.getElementById('surname');
-    const firstnameInput = document.getElementById('firstname');
+    
     const emailInput = document.getElementById('email');
     const accountInput = document.getElementById('account');
     const passwordInput = document.getElementById('password');
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleCPassword = document.getElementById('toggleCPassword');
 
     const warnings = {
-        surname: document.getElementById('surname-warning'),
+        
         firstname: document.getElementById('firstname-warning'),
         email: document.getElementById('email-warning'),
         account: document.getElementById('account-warning'),
@@ -21,13 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cpassword: document.getElementById('cpassword-warning')
     };
 
-    surnameInput.addEventListener('input', () => {
-        surnameInput.value = capitalizeFirstLetter(surnameInput.value);
-    });
-
-    firstnameInput.addEventListener('input', () => {
-        firstnameInput.value = capitalizeFirstLetter(firstnameInput.value);
-    });
 
     const validateEmail = (email) => {
         const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -122,8 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('registerBtn').addEventListener('click', async () => {
-        const surname = surnameInput.value;
-        const firstname = firstnameInput.value;
+
         const email = emailInput.value;
         const account = accountInput.value;
         const password = passwordInput.value;
@@ -143,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideWarning('password');
         hideWarning('cpassword');
 
-        const userData = { surname, firstname, email, account, password };
+        const userData = { email, account, password };
 
         try {
             const response = await fetch('http://localhost:3001/register', {
