@@ -4,13 +4,14 @@ const app = express();
 const port = 3000;
 
 // Serve static files from the front-end folder
-app.use(express.static(path.join(__dirname, 'front-end')));
+app.use(express.static(path.join(__dirname, 'front-end','page')));
 
 // Serve the main index.html file for the root URL
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'index.html'));
+  res.sendFile(path.join(__dirname, 'front-end','page' ,'index.html'));
 });
 
+git
 // Serve the registration.html file
 app.get('/registration.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'front-end', 'registration.html'));
@@ -23,4 +24,13 @@ app.get('/login.html', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Front-end server is running on http://localhost:${port}`);
+});
+
+// Endpoint to serve the homepage.html file
+app.get('/homepage.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front-end','page','homepage.html'));
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
