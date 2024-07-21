@@ -8,7 +8,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    position:relative;
     background: linear-gradient( #c5c5c5,#C3B7CB);
 }
 
@@ -223,92 +223,52 @@ button {
     object-fit: cover; /* 使圖片填滿容器 */
 }
 
+
+
+#searchbar{
+position: absolute;
+padding:25px;
+right:200px;
+
+}
+
 #search{
-    width:25px;
-    margin: 0px;
+    
+    border:3px solid #EBE8EC;
+    border-radius: 20px;
 }
 
-.searchBox {
-    position: absolute;
-    left: 68%;
-    background: #EBE8EC;
-    border-radius: 40px;
-    border:5px solid #EBE8EC;
-    margin:10px;
-    width: 280px; /* Adjust width as needed */
-    height: 40px; /* Set a fixed height */
+#searchbar button{
+width:58px;
+height: 23px;
+background-color:white ;
+border:3px solid #EBE8EC;
+border-radius: 40%;
+text-align: center;
+cursor: pointer;
 }
 
+.navbutton button{
+font-size: large;
+width:60px;
+height: 40px;
+background-color:#C3B7CB ;
+border:3px solid #EBE8EC;
+border-radius: 10px 10px 10px;
+text-align: center;
+padding:5px;
+margin-top: 15px;
+cursor: pointer;
 
 
 
-.searchword {
-    color: white;
-    float: right;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #C3B7CB;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-#searchInput {
+.navbutton{
     position: relative;
-    border:none;
-    background: none;
-    outline:none;
-    float:left;
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-    line-height: 40px;
-    width: 0px;
-    width: 240px; /* Adjust width as needed */
-    padding: 0 6px;
-    z-index: 1;
-}
-input:-webkit-autofill {
-    box-shadow:0 0 0 1000px transparent inset !important; 
-  }
-
-  input:-internal-autofill-previewed,
-  input:-internal-autofill-selected {
-  -webkit-text-fill-color: #333 !important; 
-    transition: background-color 5000s ease-in-out 0s !important;
-  }
-  
-
-
-
-
-
-
-
-.navbutton button:hover{
-    border: 5px solid #EBE8EC;
+    left: 1100px;
 }
 
-
-
-.navbutton {
-    display: flex;
-    align-items: center;
-}
-
-.navbutton button {
-    font-size: large;
-    width: 60px;
-    height: 40px;
-    background-color: #C3B7CB;
-    border: 3px solid #EBE8EC;
-    border-radius: 10px;
-    text-align: center;
-    padding: 5px;
-    margin-left: 10px;
-    cursor: pointer;
-
-}
 .userlist{
    
     position: absolute;
@@ -319,14 +279,14 @@ input:-webkit-autofill {
     cursor: pointer; /* Example style */
     position: relative;
     bottom:5px;
-    display:none;
-    
+   
 }
 .userlist img#userAvatar:hover {
   border-radius: 50%;
   border:2px solid  #ffffff;
     
-}
+} 
+
 
 
 .userSidebar a,.sidebar a{
@@ -365,6 +325,7 @@ input:-webkit-autofill {
 }
 
 
+
 ul{
     padding-inline-start:0px;
 }
@@ -379,13 +340,7 @@ ul{
     display: flex;
     align-items: center;
 }
-#userAvatar {
-    width: 50px; /* 調整圖片大小 */
-    height: 50px;
-    position: absolute; /* 增加這一行 */
-    right: -350px; /* 增加這一行 */
-     /* 增加這一行 */
-}
+
 
 #username {
     margin: 0;

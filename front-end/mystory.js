@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById("sidebar");
     const userCheckbox = document.getElementById("userCheckbox");
     const userSidebar = document.getElementById("userSidebar");
-    var searchForm = document.getElementById("searchForm");
-    var searchInput = document.getElementById("searchInput");
     const itemsPerPage = 8;
     let currentPage = 1;
     let items = [];
@@ -130,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.delete-button').forEach(setupDeleteButton);
 
-    document.getElementById('searchForm').addEventListener('click', () => {
+    document.getElementById('searchButton').addEventListener('click', () => {
         const query = document.getElementById('search').value.toLowerCase();
         const container = document.querySelector('.container');
         container.innerHTML = '';
@@ -140,39 +138,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         filteredItems.forEach(item => container.appendChild(item));
     });
-
 });
-
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = 3000;
-
-// Serve static files from the 'front-end/page' folder
-app.use(express.static(path.join(__dirname, 'front-end', 'page')));
-
-// Serve the main index.html file for the root URL
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'page', 'index.html'));
-});
-
-// Serve the registration.html file
-app.get('/registration.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'registration.html'));
-});
-
-// Serve the login.html file
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'login.html'));
-});
-
-// Endpoint to serve the homepage.html file
-app.get('/homepage.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'page', 'homepage.html'));
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
