@@ -143,36 +143,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = 3000;
-
-// Serve static files from the 'front-end/page' folder
-app.use(express.static(path.join(__dirname, 'front-end', 'page')));
-
-// Serve the main index.html file for the root URL
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'page', 'index.html'));
-});
-
-// Serve the registration.html file
-app.get('/registration.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'registration.html'));
-});
-
-// Serve the login.html file
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'login.html'));
-});
-
-// Endpoint to serve the homepage.html file
-app.get('/homepage.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front-end', 'page', 'homepage.html'));
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.item');
+  
+    items.forEach((item) => {
+      const heartButton = item.querySelector('button:nth-child(2)');
+      const dislikeButton = item.querySelector('button:nth-child(3)');
+      const saveButton = item.querySelector('button:nth-child(4)');
+  
+      if (heartButton) {
+        heartButton.addEventListener('click', () => {
+          console.log("click heart"); // Log for debugging
+          heartButton.classList.toggle('heart-clicked');
+          if (dislikeButton && dislikeButton.classList.contains('heart-clicked')) {
+            dislikeButton.classList.remove('heart-clicked');
+          }
+        });
+      } else {
+        console.error("Heart button not found in item.");
+      }
+  
+      if (dislikeButton) {
+        dislikeButton.addEventListener('click', () => {
+          console.log("click dislike"); // Log for debugging
+          dislikeButton.classList.toggle('heart-clicked');
+          if (heartButton && heartButton.classList.contains('heart-clicked')) {
+            heartButton.classList.remove('heart-clicked');
+          }
+        });
+      } else {
+        console.error("Dislike button not found in item.");
+      }
+  
+      if (saveButton) {
+        saveButton.addEventListener('click', () => {
+          console.log("click save"); // Log for debugging
+          saveButton.classList.toggle('heart-clicked');
+        });
+      } else {
+        console.error("Save button not found in item.");
+      }
+    });
+  });
+  
 
