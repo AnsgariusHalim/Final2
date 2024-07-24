@@ -20,6 +20,8 @@ div .hidden{
     cursor: pointer;
 }
 
+
+
 .menu {
     width: 30px;
     height: 25px;
@@ -101,10 +103,13 @@ input[type="checkbox"]:checked + label.menu span:nth-child(3) {
     list-style: none;
     z-index: 9999;
     background-color: white;
+    
 }
+
 
 .show-sidebar {
     transform: translate(0);
+    padding-left:0px;
 }
 
 button {
@@ -176,17 +181,6 @@ button {
     right: 20px;
 }
 
-.item {
-    position: relative;
-    height: 250px;
-    width: 350px;
-    background-color: #EBE8EC;
-    border: #C3B7CB solid 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden; /* 確保內容不會溢出 */
-}
 
 .container {
     display: flex;
@@ -291,8 +285,9 @@ input:-internal-autofill-selected {
 
 .userlist {
     position: absolute;
-    right:100px;
     z-index: 20;
+    right:0px;
+    
 }
 
 .div userlist img#userAvatar {
@@ -308,14 +303,14 @@ input:-internal-autofill-selected {
 }
 
 .userSidebar a,.sidebar a {
-    padding: 8px 8px 8px 32px;
+    
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
     transition: 0.3s;
     text-align: center;
-    padding:10px;
+    padding:5px 20px 5px 20px;
     z-index: 20;
     left:100px
 
@@ -329,13 +324,11 @@ input:-internal-autofill-selected {
 
 .show-userSidebar {
     display: block;
-    
-    top: 10px;   /* 向下移動10像素 */
-    left: 20px; 
+    padding:0px;
+    top: 70px;   /* 向下移動10像素 */
     position: relative;
     background: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border: 1px solid #c5c5c5;
     border-radius: 5px;
     z-index: 10000;
     list-style: none;
@@ -347,6 +340,7 @@ input:-internal-autofill-selected {
 
 .userSidebar li, .sidebar li {
     border-bottom: 1px solid #c5c5c5; /* 添加边框使项分隔 */
+    
 }
 
 ul {
@@ -480,6 +474,10 @@ body label img.show-userlist {
     background-color: #C3B7CB;
 }
 
+.tutorial h2{
+    width:100%;
+}
+
 
 .item-container{
     display: flex;
@@ -489,15 +487,23 @@ body label img.show-userlist {
    
 }
 
-
-.item{
+.item {
+    position: relative;
+    height: 250px;
+    width: 350px;
+    background-color: #EBE8EC;
+    border: #C3B7CB solid 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* 確保內容不會溢出 */
     margin: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     
-
 }
+
+
 
 .itembutton {
     position: absolute;
