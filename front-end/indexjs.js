@@ -1,3 +1,5 @@
+let isLogin = true
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById("menuToggle");
     const sidebar = document.getElementById("sidebar");
@@ -11,6 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let manageMode = false;
     let storyIndex = 1; // 新增：初始化故事索引
 
+    // if (isLogin) {
+    //     document.querySelector(".notLogin").classList.add("hidden")
+    //     //document.querySelector(".userlist").classList.remove("hidden")
+
+    // } else {
+    //     document.querySelector(".notLogin").classList.remove("hidden")
+    //     //document.querySelector(".userlist").classList.add("hidden")
+    // }
     if (menuToggle) {
         menuToggle.addEventListener("change", function () {
             if (this.checked) {
@@ -38,7 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkLoginStatus()) {
         document.getElementById("userAvatar").classList.add("show-userlist");
         document.getElementById("username").classList.add("show-username");
-        
+        document.querySelector(".navbutton").classList.add("hidden");
+    }
+    else {
+        document.getElementById("userAvatar").classList.remove("show-userlist");
+        document.getElementById("username").classList.remove("show-username");
+        document.querySelector(".navbutton").classList.remove("hidden");
+
     }
 
     function setupDeleteButton(deleteButton) {
