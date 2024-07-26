@@ -1,0 +1,421 @@
+body {
+    margin: 0;
+}
+
+.Navigationbar {
+    background-color: #c5c5c5;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position:relative;
+    background: linear-gradient( #c5c5c5,#C3B7CB);
+}
+
+
+
+
+
+.Navigationbar img {
+    margin: 15px;
+    cursor: pointer;
+    
+}
+
+.menu {
+    width: 30px;
+    height: 25px;
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu span {
+    background-color: #fff;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width: 100%;
+    height: 4px;
+}
+
+.menu span:nth-child(1) {
+    top: 0px;
+    left: 0px;
+}
+
+.menu span:nth-child(2) {
+    top: 13px;
+    left: 0px;
+}
+
+.menu span:nth-child(3) {
+    bottom: -5px;
+    left: 0px;
+    
+}
+
+.menu:hover span:nth-child(1) {
+    transform: scaleY(1.2);
+    left: -5px;
+}
+
+.menu:hover span:nth-child(2) {
+    transform: rotate(5deg) scaleY(1.1);
+}
+
+.menu:hover span:nth-child(3) {
+    transform: scaleY(1.2);
+    left: 5px;
+   
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(1) {
+    transform: rotate(30deg) translate(5px, 5px);
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(2) {
+    transform: scale(0);
+    transition-duration: 50ms;
+}
+
+input[type="checkbox"]:checked + label.menu span:nth-child(3) {
+    transform: rotate(-30deg) translate(5px, -5px);
+}
+
+.sidebar {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    width: 200px;
+    height: auto;
+    background: var(--clr-white);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    box-shadow: var(--clr-red-dark);
+    transition: var(--transition);
+    transform: translate(-100%); /* 用此屬性控制縮放 */
+    border: 2px solid #c5c5c5; /* Add border */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    list-style: none;
+    z-index: 9999;
+    background-color: white;
+    
+}
+
+
+.show-sidebar {
+    transform: translate(0);
+}
+
+
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.black button{
+    position: relative;
+    background-image: linear-gradient(to bottom left, #060606, white);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    text-align: center; /* 水平居中 */
+    overflow-y: hidden;
+    
+    
+  }
+  
+  .black button::before {
+    content: '';
+    position: absolute; /* 将伪元素相对于按钮进行绝对定位 */
+    width: 100%;
+    height: 0%;
+    left: 0;
+    top: 0;
+    border-radius: 0 0 50% 50%;
+    transition: .2s;
+    background-color: #201f1f;
+    opacity: 0.3;
+    
+    
+  }
+  
+  .black button:hover::before {
+    /* 其他悬停时的样式 */
+    height: 120%; /* 鼠标悬停时的高度 */
+  }
+
+.bottom {
+    display: flex; 
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    align-items: center;
+     /* 可以根据需要调整 */
+    left:35%;
+    gap: 20px;
+   
+    
+  }
+
+  .container{
+  /*background-color: #F1F0F2;*/
+  display:grid;
+  grid-template-columns:33% 33% 33%;
+  grid-template-rows: 33% 33% 33%;
+  margin:20px 20px 20px 90px;
+  
+  
+}
+.delete-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1; /* 確保刪除按鈕在圖片前面 */
+    display: none; /* 初始隱藏 */
+}
+.manage-button {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+
+.item {
+    position: relative;
+    height: 250px;
+    width: 350px;
+    background-color: #EBE8EC;
+    border: #C3B7CB solid 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* 確保內容不會溢出 */
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 設定 item 之間的間距 */
+}
+
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden; /* 確保圖片在容器內部 */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 使圖片填滿容器 */
+}
+
+
+
+#searchbar{
+position: absolute;
+padding:25px;
+right:200px;
+
+}
+
+#search{
+    
+    border:3px solid #EBE8EC;
+    border-radius: 20px;
+}
+
+#searchbar button{
+width:58px;
+height: 23px;
+background-color:white ;
+border:3px solid #EBE8EC;
+border-radius: 40%;
+text-align: center;
+cursor: pointer;
+}
+
+.navbutton button{
+font-size: large;
+width:60px;
+height: 40px;
+background-color:#C3B7CB ;
+border:3px solid #EBE8EC;
+border-radius: 10px 10px 10px;
+text-align: center;
+padding:5px;
+margin-top: 15px;
+cursor: pointer;
+
+
+
+}
+
+.navbutton{
+    position: relative;
+    left: 1100px;
+}
+
+.userlist{
+   
+    position: absolute;
+    right:100px;
+}
+
+.userlist img#userAvatar {
+    cursor: pointer; /* Example style */
+    position: relative;
+    bottom:5px;
+   
+}
+.userlist img#userAvatar:hover {
+  border-radius: 50%;
+  border:2px solid  #ffffff;
+    
+} 
+
+
+
+.userSidebar a,.sidebar a{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    text-align: center;
+    padding:10px;
+}
+.userSidebar {
+    display: none;  
+}
+
+.show-userSidebar {
+    display: block;
+    position: absolute;
+    top: 52px;
+    width: 150px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    z-index: 10000;
+    list-style: none;
+}
+
+.userSidebar a:hover ,.sidebar a:hover{
+    color: #f1f1f1;
+}
+
+.userSidebar li, .sidebar li {
+    border-bottom: 1px solid #c5c5c5; /* 添加边框使项分隔 */
+}
+
+
+
+ul{
+    padding-inline-start:0px;
+}
+
+.Navigationbar h3{
+    position: absolute;
+    right: 10px;
+    margin:20px;
+    display:none;
+}
+.userlist {
+    display: flex;
+    align-items: center;
+}
+
+
+#username {
+    margin: 0;
+    padding: 0;
+    color: white; /* 設置字體顏色為白色 */
+}
+show-username, .show-userlist {
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}
+.large-text {
+    font-size: 30px; /* 調整字體大小 */
+    font-weight: bold; /* 可選，讓字體加粗 */
+    right: 50px;
+    
+}
+.plus-text {
+    font-size:40px; /* 調整字體大小 */
+    font-weight: bold; /* 可選，讓字體加粗 */
+   
+}
+
+.offset-right {
+    margin-left: 90px; /* 根據需要調整數值 */
+}
+.plus-right {
+    margin-left: 10px; /* 根據需要調整數值 */
+    background-color: #C3B7CB;
+    border: none;
+    border-radius: 10px;
+    padding: 3px 15px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+
+    border-radius: 20px; /* 設置圓角 */
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    display: inline-block;
+    
+}
+.right-align {
+    background-color: #C3B7CB;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin: 4px 2px;
+    right: 150px;
+    position: absolute;
+    border-radius: 20px; /* 設置圓角 */
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    display: inline-block;
+
+}
+.story-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.story-section span {
+    margin-left: 10px;
+}
+.image-name {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 5px;
+    z-index: 10;
+    width: 50px; /* 可以根據需要調整寬度 */
+}
