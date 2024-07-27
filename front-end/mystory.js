@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkLoginStatus()) {
         document.getElementById("userAvatar").classList.add("show-userlist");
         document.getElementById("username").classList.add("show-username");
-        
+
     }
 
     function setupDeleteButton(deleteButton) {
-        deleteButton.addEventListener('click', function() {
+        deleteButton.addEventListener('click', function () {
             const item = deleteButton.closest('.item');
             if (item) {
                 items = items.filter(i => i !== item);
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             const file = fileInput.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     const newItem = document.createElement('span');
                     newItem.className = 'item';
                     const defaultName = `故事檔案${storyIndex++}`; // 修改：設置默認名稱
