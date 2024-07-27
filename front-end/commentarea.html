@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="comment.js" defer></script> <!-- 確保文件名正確，並添加 defer 屬性 -->
+    <title>説故事</title>
+    <link rel="stylesheet" href="comment.css">
+</head>
+
+<body>
+<div class="Navigationbar">
+    <input type="checkbox" id="menuToggle">
+    <label class="menu" for="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul class="sidebar" id="sidebar">
+            <li><a href="#home">主頁</a></li>
+            <li><a href="#tutorial">教學</a></li>
+            <li><a href="#Portfolio">精彩作品集</a></li>
+            <li><a href="#about">關於我們</a></li>
+        </ul>
+    </label>
+    <form>
+        <button type="button" onclick="location.href='index.html'">
+            <img src="pictures/説故事.png" alt="説故事">
+        </button>
+    </form>
+
+    <form class="searchBox" id="searchForm">
+        <input id="searchInput" type="search" placeholder="搜索">
+        <button class="searchword" href="#">
+            <img id="search" src="pictures/magnifying-glass.png">
+        </button>
+    </form>
+
+    <div class="userlist">
+        <input type="checkbox" id="userCheckbox" name="userButton">
+        <label for="userCheckbox">
+            <img id="userAvatar" src="pictures/user_avatar.png" alt="User Avatar">
+        </label>
+        <ul class="userSidebar" id="userSidebar">
+            <li><a href="#profile">個人檔案</a></li>
+            <li><a href="#mystory">我的故事</a></li>
+            <li><a href="#mysave">我的收藏</a></li>
+            <li><a href="#mylike">我的喜歡</a></li>
+            <li><a href="#setting">設定</a></li>
+            <li><a href="#logout">登出</a></li>
+        </ul>
+    
+        <form action="getusername">
+            <h3 id="username" class="username">用戶名稱</h3>
+        </form>
+    </div>
+    
+
+    
+   
+</div>
+
+
+
+    <div class="showplace">
+        
+        
+            <div class="item">
+                <h2>檔案名稱</h2>
+            </div>
+        
+    </div>
+
+    <div class="commentboard">
+        <div id="comments"></div>
+        <div class="input-area">
+            <textarea id="commentInput" placeholder="在此输入留言..."></textarea>
+            <span class="black">
+            <button id="submitComment">發佈</button>
+            </span>
+        </div>
+    </div>
+    
+
+</body>
+</html>
