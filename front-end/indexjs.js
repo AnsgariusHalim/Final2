@@ -1,4 +1,33 @@
-let isLogin = true
+const { JSDOM } = require('jsdom');
+
+const { window } = new JSDOM(`<!DOCTYPE html><html><body>
+<div id="menuToggle"></div>
+<div id="sidebar"></div>
+<div id="userCheckbox"></div>
+<div id="userSidebar"></div>
+<div id="userAvatar"></div>
+<div id="username"></div>
+<div class="navbutton"></div>
+<div class="container"></div>
+<input id="currentPage" />
+<button id="prevPageButton"></button>
+<button id="nextPageButton"></button>
+<button id="manageButton"></button>
+<button id="newStoryButton"></button>
+<form id="searchForm"><input id="search" /></form>
+<div class="notLogin"></div>
+<div class="userlist"></div>
+<div class="item">
+    <button class="like"></button>
+    <button class="dislike"></button>
+    <button class="save"></button>
+</div>
+</body></html>`, { runScripts: "dangerously", resources: "usable" });
+
+global.document = window.document;
+global.window = window;
+
+let isLogin = true;
 
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById("menuToggle");
@@ -13,14 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let manageMode = false;
     let storyIndex = 1; // 新增：初始化故事索引
 
-    // if (isLogin) {
-    //     document.querySelector(".notLogin").classList.add("hidden")
-    //     //document.querySelector(".userlist").classList.remove("hidden")
-
-    // } else {
-    //     document.querySelector(".notLogin").classList.remove("hidden")
-    //     //document.querySelector(".userlist").classList.add("hidden")
-    // }
     if (menuToggle) {
         menuToggle.addEventListener("change", function () {
             if (this.checked) {
@@ -54,11 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("userAvatar").classList.remove("show-userlist");
         document.getElementById("username").classList.remove("show-username");
         document.querySelector(".navbutton").classList.remove("hidden");
-
     }
 
     function setupDeleteButton(deleteButton) {
-        deleteButton.addEventListener('click', function() {
+        deleteButton.addEventListener('click', function () {
             const item = deleteButton.closest('.item');
             if (item) {
                 items = items.filter(i => i !== item);
@@ -74,11 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             const file = fileInput.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     const newItem = document.createElement('span');
                     newItem.className = 'item';
                     const defaultName = `故事檔案${storyIndex++}`; // 修改：設置默認名稱
@@ -161,45 +181,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.item');
-  
-    items.forEach((item) => {
-      const heartButton = item.querySelector('button:nth-child(2)');
-      const dislikeButton = item.querySelector('button:nth-child(3)');
-      const saveButton = item.querySelector('button:nth-child(4)');
-  
-      if (heartButton) {
-        heartButton.addEventListener('click', () => {
-          console.log("click heart"); // Log for debugging
-          heartButton.classList.toggle('heart-clicked');
-          if (dislikeButton && dislikeButton.classList.contains('heart-clicked')) {
-            dislikeButton.classList.remove('heart-clicked');
-          }
-        });
-      } else {
-        console.error("Heart button not found in item.");
-      }
-  
-      if (dislikeButton) {
-        dislikeButton.addEventListener('click', () => {
-          console.log("click dislike"); // Log for debugging
-          dislikeButton.classList.toggle('heart-clicked');
-          if (heartButton && heartButton.classList.contains('heart-clicked')) {
-            heartButton.classList.remove('heart-clicked');
-          }
-        });
-      } else {
-        console.error("Dislike button not found in item.");
-      }
-  
-      if (saveButton) {
-        saveButton.addEventListener('click', () => {
-          console.log("click save"); // Log for debugging
-          saveButton.classList.toggle('heart-clicked');
-        });
-      } else {
-        console.error("Save button not found in item.");
-      }
-    });
-  });
-  
 
+    items.forEach((item) => {
+        const heartButton = item.querySelector('button:nth-child(2)');
+        const dislikeButton = item.querySelector('button:nth-child(3)');
+        const saveButton = item.querySelector('button:nth-child(4)');
+
+        if (heartButton) {
+            heartButton.addEventListener('click', () => {
+                console.log("click heart"); // Log for debugging
+                heartButton.classList.toggle('heart-clicked');
+                if (dislikeButton && dislikeButton.classList.contains('heart-clicked')) {
+                    dislikeButton.classList.remove('heart-clicked');
+                }
+            });
+        } else {
+            console.error("Heart button not found in item.");
+        }
+
+        if (dislikeButton) {
+            dislikeButton.addEventListener('click', () => {
+                console.log("click dislike"); // Log for debugging
+                dislikeButton.classList.toggle('heart-clicked');
+                if (heartButton && heartButton.classList.contains('heart-clicked')) {
+                    heartButton.classList.remove('heart-clicked');
+                }
+            });
+        } else {
+            console.error("Dislike button not found in item.");
+        }
+
+        if (saveButton) {
+            saveButton.addEventListener('click', () => {
+                console.log("click save"); // Log for debugging
+                saveButton.classList.toggle('heart-clicked');
+            });
+        } else {
+            console.error("Save button not found in item.");
+        }
+    });
+});
