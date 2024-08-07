@@ -32,7 +32,8 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Set a fixed width for the form */
+  width: 300px;
+  /* Set a fixed width for the form */
 }
 
 #login h1 {
@@ -57,22 +58,33 @@ body {
 }
 
 #login button {
-  background-color: #007bff; /* Blue background */
+  background-color: #007bff;
+  /* Blue background */
   border: none;
-  color: white; /* White text */
-  padding: 15px; /* Padding */
-  text-align: center; /* Centered text */
-  text-decoration: none; /* Remove underline */
-  display: inline-block; /* Get it to fit in the same line */
-  font-size: 16px; /* Increase font size */
-  cursor: pointer; /* Pointer/hand icon */
-  border-radius: 5px; /* Rounded corners */
-  width: 100%; /* Full width */
+  color: white;
+  /* White text */
+  padding: 15px;
+  /* Padding */
+  text-align: center;
+  /* Centered text */
+  text-decoration: none;
+  /* Remove underline */
+  display: inline-block;
+  /* Get it to fit in the same line */
+  font-size: 16px;
+  /* Increase font size */
+  cursor: pointer;
+  /* Pointer/hand icon */
+  border-radius: 5px;
+  /* Rounded corners */
+  width: 100%;
+  /* Full width */
   box-sizing: border-box;
 }
 
 #login button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
+  /* Darker blue on hover */
 }
 
 .password-container {
@@ -81,8 +93,10 @@ body {
 }
 
 .password-container input {
-  width: 100%; /* Full width */
-  padding-right: 30px; /* Add space for the eye icon */
+  width: 100%;
+  /* Full width */
+  padding-right: 30px;
+  /* Add space for the eye icon */
 }
 
 .password-container .fa-eye {
@@ -91,4 +105,11 @@ body {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+}
+
+.google-signin-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

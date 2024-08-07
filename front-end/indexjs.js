@@ -1,26 +1,16 @@
-let isLogin = true
-
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById("menuToggle");
     const sidebar = document.getElementById("sidebar");
     const userCheckbox = document.getElementById("userCheckbox");
     const userSidebar = document.getElementById("userSidebar");
-    var searchForm = document.getElementById("searchForm");
-    var searchInput = document.getElementById("searchInput");
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
     const itemsPerPage = 8;
     let currentPage = 1;
     let items = [];
     let manageMode = false;
-    let storyIndex = 1; // 新增：初始化故事索引
+    let storyIndex = 1;
 
-    // if (isLogin) {
-    //     document.querySelector(".notLogin").classList.add("hidden")
-    //     //document.querySelector(".userlist").classList.remove("hidden")
-
-    // } else {
-    //     document.querySelector(".notLogin").classList.remove("hidden")
-    //     //document.querySelector(".userlist").classList.add("hidden")
-    // }
     if (menuToggle) {
         menuToggle.addEventListener("change", function () {
             if (this.checked) {
@@ -41,24 +31,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function checkLoginStatus() {
-        return true; // 假設用戶已登錄
+    function updateNavbar(user) {
+        const userAvatar = document.getElementById("userAvatar");
+        const username = document.getElementById("username");
+        const navbutton = document.querySelector(".navbutton");
+
+        if (user.isLoggedIn) {
+            if (userAvatar) {
+                userAvatar.src = user.profilePicture
+                    ? user.profilePicture
+                    : 'pictures/user_avatar.png';
+                userAvatar.classList.add("show-userlist");
+            }
+
+            if (username) {
+                username.innerText = user.username;
+                username.classList.add("show-username");
+            }
+
+            if (navbutton) {
+                navbutton.classList.add("hidden");
+            }
+        } else {
+            if (userAvatar) {
+                userAvatar.classList.remove("show-userlist");
+            }
+
+            if (username) {
+                username.classList.remove("show-username");
+            }
+
+            if (navbutton) {
+                navbutton.classList.remove("hidden");
+            }
+        }
     }
 
-    if (checkLoginStatus()) {
-        document.getElementById("userAvatar").classList.add("show-userlist");
-        document.getElementById("username").classList.add("show-username");
-        document.querySelector(".navbutton").classList.add("hidden");
-    }
-    else {
-        document.getElementById("userAvatar").classList.remove("show-userlist");
-        document.getElementById("username").classList.remove("show-username");
-        document.querySelector(".navbutton").classList.remove("hidden");
-
-    }
+    fetch('http://localhost:3001/auth/status', {
+        method: 'GET',
+        credentials: 'include',
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Log the response to debug
+            updateNavbar(data);
+        })
+        .catch(error => {
+            console.error('Error fetching auth status:', error);
+        });
 
     function setupDeleteButton(deleteButton) {
-        deleteButton.addEventListener('click', function() {
+        deleteButton.addEventListener('click', function () {
             const item = deleteButton.closest('.item');
             if (item) {
                 items = items.filter(i => i !== item);
@@ -74,14 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             const file = fileInput.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     const newItem = document.createElement('span');
                     newItem.className = 'item';
-                    const defaultName = `故事檔案${storyIndex++}`; // 修改：設置默認名稱
+                    const defaultName = `故事檔案${storyIndex++}`;
                     newItem.innerHTML = `
                         <div class="item-header">
                             <input type="text" class="image-name" placeholder="輸入圖片名稱" value="${defaultName}">
@@ -97,15 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 reader.readAsDataURL(file);
             }
-            document.body.removeChild(fileInput); // 移除 file input
+            document.body.removeChild(fileInput);
         });
 
-        // 自動觸發文件選擇框
         fileInput.click();
     }
 
     function renderItems() {
         const container = document.querySelector('.container');
+        if (!container) return;
         container.innerHTML = '';
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -115,9 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePageControls() {
-        document.getElementById('currentPage').value = currentPage;
-        document.getElementById('prevPageButton').disabled = currentPage === 1;
-        document.getElementById('nextPageButton').disabled = items.length <= currentPage * itemsPerPage;
+        const currentPageInput = document.getElementById('currentPage');
+        const prevPageButton = document.getElementById('prevPageButton');
+        const nextPageButton = document.getElementById('nextPageButton');
+
+        if (currentPageInput) currentPageInput.value = currentPage;
+        if (prevPageButton) prevPageButton.disabled = currentPage === 1;
+        if (nextPageButton) nextPageButton.disabled = items.length <= currentPage * itemsPerPage;
     }
 
     function toggleManageMode() {
@@ -127,79 +154,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.getElementById('newStoryButton').addEventListener('click', addNewItem);
-    document.getElementById('prevPageButton').addEventListener('click', () => {
+    const newStoryButton = document.getElementById('newStoryButton');
+    const prevPageButton = document.getElementById('prevPageButton');
+    const nextPageButton = document.getElementById('nextPageButton');
+    const manageButton = document.getElementById('manageButton');
+
+    if (newStoryButton) newStoryButton.addEventListener('click', addNewItem);
+    if (prevPageButton) prevPageButton.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
             renderItems();
         }
     });
 
-    document.getElementById('nextPageButton').addEventListener('click', () => {
+    if (nextPageButton) nextPageButton.addEventListener('click', () => {
         if (items.length > currentPage * itemsPerPage) {
             currentPage++;
             renderItems();
         }
     });
 
-    document.getElementById('manageButton').addEventListener('click', toggleManageMode);
+    if (manageButton) manageButton.addEventListener('click', toggleManageMode);
 
     document.querySelectorAll('.delete-button').forEach(setupDeleteButton);
 
-    document.getElementById('searchForm').addEventListener('click', () => {
-        const query = document.getElementById('search').value.toLowerCase();
-        const container = document.querySelector('.container');
-        container.innerHTML = '';
-        const filteredItems = items.filter(item => {
-            const name = item.querySelector('.image-name').value.toLowerCase();
-            return name.includes(query);
+    if (searchForm) {
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const query = searchInput.value.toLowerCase();
+            const container = document.querySelector('.container');
+            if (!container) return;
+            container.innerHTML = '';
+            const filteredItems = items.filter(item => {
+                const name = item.querySelector('.image-name').value.toLowerCase();
+                return name.includes(query);
+            });
+            filteredItems.forEach(item => container.appendChild(item));
         });
-        filteredItems.forEach(item => container.appendChild(item));
-    });
+    }
 
+    const itemElements = document.querySelectorAll('.item');
+
+    itemElements.forEach((item) => {
+        const heartButton = item.querySelector('button:nth-child(2)');
+        const dislikeButton = item.querySelector('button:nth-child(3)');
+        const saveButton = item.querySelector('button:nth-child(4)');
+
+        if (heartButton) {
+            heartButton.addEventListener('click', () => {
+                heartButton.classList.toggle('heart-clicked');
+                if (dislikeButton && dislikeButton.classList.contains('heart-clicked')) {
+                    dislikeButton.classList.remove('heart-clicked');
+                }
+            });
+        }
+
+        if (dislikeButton) {
+            dislikeButton.addEventListener('click', () => {
+                dislikeButton.classList.toggle('heart-clicked');
+                if (heartButton && heartButton.classList.contains('heart-clicked')) {
+                    heartButton.classList.remove('heart-clicked');
+                }
+            });
+        }
+
+        if (saveButton) {
+            saveButton.addEventListener('click', () => {
+                saveButton.classList.toggle('heart-clicked');
+            });
+        }
+    });
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const items = document.querySelectorAll('.item');
-  
-    items.forEach((item) => {
-      const heartButton = item.querySelector('button:nth-child(2)');
-      const dislikeButton = item.querySelector('button:nth-child(3)');
-      const saveButton = item.querySelector('button:nth-child(4)');
-  
-      if (heartButton) {
-        heartButton.addEventListener('click', () => {
-          console.log("click heart"); // Log for debugging
-          heartButton.classList.toggle('heart-clicked');
-          if (dislikeButton && dislikeButton.classList.contains('heart-clicked')) {
-            dislikeButton.classList.remove('heart-clicked');
-          }
-        });
-      } else {
-        console.error("Heart button not found in item.");
-      }
-  
-      if (dislikeButton) {
-        dislikeButton.addEventListener('click', () => {
-          console.log("click dislike"); // Log for debugging
-          dislikeButton.classList.toggle('heart-clicked');
-          if (heartButton && heartButton.classList.contains('heart-clicked')) {
-            heartButton.classList.remove('heart-clicked');
-          }
-        });
-      } else {
-        console.error("Dislike button not found in item.");
-      }
-  
-      if (saveButton) {
-        saveButton.addEventListener('click', () => {
-          console.log("click save"); // Log for debugging
-          saveButton.classList.toggle('heart-clicked');
-        });
-      } else {
-        console.error("Save button not found in item.");
-      }
-    });
-  });
-  
-
