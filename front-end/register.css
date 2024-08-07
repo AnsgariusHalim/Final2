@@ -5,6 +5,8 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
+  overflow: hidden;
+  /* Prevent background scrolling when modal is open */
 }
 
 .Navigationbar {
@@ -29,7 +31,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 70px); /* Subtract the height of the navigation bar */
+  height: calc(100vh - 70px);
+  /* Subtract the height of the navigation bar */
 }
 
 #register {
@@ -39,7 +42,8 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Set a fixed width for the form */
+  width: 300px;
+  /* Set a fixed width for the form */
 }
 
 #content {
@@ -50,7 +54,8 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-bottom: 20px; /* Add space between form groups */
+  margin-bottom: 20px;
+  /* Add space between form groups */
 }
 
 .form-group label {
@@ -112,21 +117,84 @@ input:focus {
 }
 
 button {
-  background-color: #28a745; /* Green background */
+  background-color: #28a745;
+  /* Green background */
   border: none;
-  color: white; /* White text */
-  padding: 15px 32px; /* Padding */
-  text-align: center; /* Centered text */
-  text-decoration: none; /* Remove underline */
-  display: inline-block; /* Get it to fit in the same line */
-  font-size: 16px; /* Increase font size */
-  margin: 4px 2px; /* Some margin */
-  cursor: pointer; /* Pointer/hand icon */
-  border-radius: 5px; /* Rounded corners */
-  width: 100%; /* Full width */
+  color: white;
+  /* White text */
+  padding: 15px 32px;
+  /* Padding */
+  text-align: center;
+  /* Centered text */
+  text-decoration: none;
+  /* Remove underline */
+  display: inline-block;
+  /* Get it to fit in the same line */
+  font-size: 16px;
+  /* Increase font size */
+  margin: 4px 2px;
+  /* Some margin */
+  cursor: pointer;
+  /* Pointer/hand icon */
+  border-radius: 5px;
+  /* Rounded corners */
+  width: 100%;
+  /* Full width */
   box-sizing: border-box;
 }
 
 button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
+  /* Darker green on hover */
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Black w/ opacity */
+  backdrop-filter: blur(5px);
+  /* Blur background */
+  -webkit-backdrop-filter: blur(5px);
+  /* Safari support */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 600px;
+  /* Max width of the modal */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#crop-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#crop-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+}
+
+#crop-button {
+  margin-top: 10px;
 }

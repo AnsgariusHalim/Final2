@@ -1,37 +1,39 @@
 body {
     margin: 0;
 }
-div .hidden{
-    display: none;
-}
 
 .Navigationbar {
     background-color: #c5c5c5;
     height: 70px;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    background: linear-gradient( #c5c5c5,#C3B7CB);
+    align-items: center;
+    background: linear-gradient(#c5c5c5, #C3B7CB);
+    padding: 0 20px;
+    position: relative;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .Navigationbar img {
     margin: 15px;
+    left: 20px;
     cursor: pointer;
 }
 
 .menu {
     width: 30px;
     height: 25px;
-    margin: 20px;
-    position: relative;
     cursor: pointer;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 20px;
 }
+
 
 .menu span {
     background-color: #fff;
-    position: absolute;
     border-radius: 2px;
     transition: .3s cubic-bezier(.8, .5, .2, 1.4);
     width: 100%;
@@ -71,48 +73,62 @@ input[type="checkbox"] {
     display: none;
 }
 
-input[type="checkbox"]:checked + label.menu span:nth-child(1) {
+input[type="checkbox"]:checked+label.menu span:nth-child(1) {
     transform: rotate(30deg) translate(5px, 5px);
 }
 
-input[type="checkbox"]:checked + label.menu span:nth-child(2) {
+input[type="checkbox"]:checked+label.menu span:nth-child(2) {
     transform: scale(0);
     transition-duration: 50ms;
 }
 
-input[type="checkbox"]:checked + label.menu span:nth-child(3) {
+input[type="checkbox"]:checked+label.menu span:nth-child(3) {
     transform: rotate(-30deg) translate(5px, -5px);
 }
 
 .sidebar {
-    position: fixed;
-    top: 52px;
+    position: absolute;
+    top: 70px;
     left: 0;
     width: 200px;
     height: auto;
-    background: var(--clr-white);
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    box-shadow: var(--clr-red-dark);
-    transition: var(--transition);
-    transform: translate(-100%); /* 用此屬性控制縮放 */
-    border: 2px solid #c5c5c5; /* Add border */
-    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    background: #fff;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #c5c5c5;
+    border-radius: 5px;
     list-style: none;
     z-index: 9999;
-    background-color: white;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
 }
 
-.show-sidebar {
-    transform: translate(0);
+input[type="checkbox"]:checked~.sidebar {
+    display: flex;
+    transform: translateX(0);
 }
+
+#shuoButton {
+    margin-left: 20px;
+}
+
 
 button {
     background-color: transparent;
     border: none;
 }
 
-.black button{
+#logoButton {
+    margin-left: 60px;
+    /* Position the logo button near the menu */
+    position: absolute;
+    left: 60px;
+    /* Align to the left side */
+    cursor: pointer;
+}
+
+.black button {
     position: relative;
     background-image: linear-gradient(to bottom left, #060606, white);
     color: white;
@@ -122,13 +138,13 @@ button {
     cursor: pointer;
     width: 80px;
     height: 30px;
-    text-align: center; /* 水平居中 */
+    text-align: center;
     overflow-y: hidden;
 }
 
 .black button::before {
     content: '';
-    position: absolute; /* 将伪元素相对于按钮进行绝对定位 */
+    position: absolute;
     width: 100%;
     height: 0%;
     left: 0;
@@ -140,34 +156,32 @@ button {
 }
 
 .black button:hover::before {
-    /* 其他悬停时的样式 */
-    height: 120%; /* 鼠标悬停时的高度 */
+    height: 120%;
 }
 
 .bottom {
-    display: flex; 
+    display: flex;
     justify-content: center;
     position: absolute;
     bottom: 0;
     align-items: center;
-     /* 可以根据需要调整 */
-    left:35%;
+    left: 35%;
     gap: 20px;
 }
 
 .container {
-    display:grid;
-    grid-template-columns:33% 33% 33%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
     grid-template-rows: 33% 33% 33%;
-    margin:20px 20px 20px 90px;
+    margin: 20px 20px 20px 90px;
 }
 
 .delete-button {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    z-index: 1; /* 確保刪除按鈕在圖片前面 */
-    display: none; /* 初始隱藏 */
+    z-index: 1;
+    display: none;
 }
 
 .manage-button {
@@ -185,13 +199,13 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden; /* 確保內容不會溢出 */
+    overflow: hidden;
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* 設定 item 之間的間距 */
+    gap: 20px;
 }
 
 .image-container {
@@ -200,190 +214,149 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden; /* 確保圖片在容器內部 */
+    overflow: hidden;
 }
 
 .image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 使圖片填滿容器 */
+    object-fit: cover;
 }
 
 #search {
-    width:25px;
+    width: 25px;
     margin: 0px;
+    left: 1px;
 }
 
-
 .searchBox {
-    position: absolute;
-    left: 68%;
     background: #EBE8EC;
     border-radius: 40px;
-    border:2px solid #EBE8EC;
-    margin:15px;
-    width: 280px; /* Adjust width as needed */
-    height: 40px; /* Set a fixed height */
-    display: flex; /* Use flexbox to align children */
-    align-items: center; /* Vertically center the search input */
+    border: 2px solid #EBE8EC;
+    width: 280px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+#searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    width: auto;
+    margin-left: 10px;
 }
 
 .searchword {
-    color: white;
-    width: 40px;
-    height: 40px;
+    width: auto;
+    height: 30px;
     border-radius: 50%;
     background: #C3B7CB;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: auto; /* Pushes the button to the right edge */
 }
-
-#searchInput {
-    border:none;
-    background: none;
-    outline:none;
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-    line-height: 40px;
-    width: 240px; /* Adjust width as needed */
-    padding: 0 10px;
-}
-
-
-
 
 input:-webkit-autofill {
-    box-shadow:0 0 0 1000px transparent inset !important; 
+    box-shadow: 0 0 0 1000px transparent inset !important;
 }
 
 input:-internal-autofill-previewed,
 input:-internal-autofill-selected {
-    -webkit-text-fill-color: #333 !important; 
+    -webkit-text-fill-color: #333 !important;
     transition: background-color 5000s ease-in-out 0s !important;
-}
-
-.navbutton button:hover {
-    border: 5px solid #EBE8EC;
 }
 
 .navbutton {
     display: flex;
     align-items: center;
-    margin:15px;
-    position: absolute;
-    right:10px;
+    gap: 10px;
 }
 
 .navbutton button {
     font-size: large;
-    width: 60px;
+    width: 80px;
     height: 40px;
     background-color: #C3B7CB;
     border: 3px solid #EBE8EC;
     border-radius: 10px;
     text-align: center;
-    padding: 5px;
-    margin-left: 10px;
     cursor: pointer;
 }
 
 .userlist {
-    position: absolute;
-    right:100px;
-    z-index: 20;
-}
-
-.div userlist img#userAvatar {
-    cursor: pointer; /* Example style */
+    display: flex;
+    align-items: center;
+    gap: 10px;
     position: relative;
-    bottom:5px;
-    display: none;
 }
 
-.userlist img#userAvatar:hover {
+#userAvatar {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border:2px solid  #ffffff;
+    border: 2px solid #ffffff;
+    transition: transform 0.2s;
 }
 
-.userSidebar a,.sidebar a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-    text-align: center;
-    padding:10px;
-    z-index: 20;
-    left:100px
-
+#userAvatar:hover {
+    transform: scale(1.1);
 }
 
 .userSidebar {
-    display: none;  
-    z-index: 20;
-
-}
-
-.show-userSidebar {
-    display: block;
-    
-    top: 10px;   /* 向下移動10像素 */
-    left: 20px; 
-    position: relative;
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
     background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #c5c5c5;
     border-radius: 5px;
     z-index: 10000;
     list-style: none;
 }
 
-.userSidebar a:hover ,.sidebar a:hover {
-    color: #f1f1f1;
+input[type="checkbox"]:checked~.userSidebar {
+    display: block;
 }
 
-.userSidebar li, .sidebar li {
-    border-bottom: 1px solid #c5c5c5; /* 添加边框使项分隔 */
+.userSidebar a {
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.userSidebar a:hover {
+    background-color: #f1f1f1;
+}
+
+.userSidebar li {
+    border-bottom: 1px solid #c5c5c5;
 }
 
 ul {
-    padding-inline-start:0px;
+    padding-inline-start: 0px;
 }
+
 
 .Navigationbar h3 {
-    position: absolute;
-    right: 10px;
-    margin:20px;
-    display: none;
-}
-
-.userlist {
-    display: flex;
-    align-items: center;
-}
-
-#userAvatar {
-    width: -50px; /* 調整圖片大小 */
-    height: 50px;
-    position: absolute; /* 增加這一行 */
-    right: 100px; /* 增加這一行 */
+    margin: 0;
+    padding: 0;
+    color: white;
 }
 
 #username {
     margin: 0;
     padding: 0;
-    color: white; /* 設置字體顏色為白色 */
-}
-
-div .show-username {
-    display: inline-block;
-}
-
-body label img.show-userlist {
-    display: inline-block !important;
+    color: white;
 }
 
 .hide {
@@ -391,22 +364,21 @@ body label img.show-userlist {
 }
 
 .large-text {
-    font-size: 30px; /* 調整字體大小 */
-    font-weight: bold; /* 可選，讓字體加粗 */
-    right: 50px;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .plus-text {
-    font-size:40px; /* 調整字體大小 */
-    font-weight: bold; /* 可選，讓字體加粗 */
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .offset-right {
-    margin-left: 90px; /* 根據需要調整數值 */
+    margin-left: 90px;
 }
 
 .plus-right {
-    margin-left: 10px; /* 根據需要調整數值 */
+    margin-left: 10px;
     background-color: #C3B7CB;
     border: none;
     border-radius: 10px;
@@ -414,9 +386,8 @@ body label img.show-userlist {
     font-size: 40px;
     color: white;
     cursor: pointer;
-
-    border-radius: 20px; /* 設置圓角 */
-    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1);
     display: inline-block;
 }
 
@@ -429,10 +400,8 @@ body label img.show-userlist {
     color: white;
     cursor: pointer;
     margin: 4px 2px;
-    right: 150px;
-    position: absolute;
-    border-radius: 20px; /* 設置圓角 */
-    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1); /* 添加陰影效果 */
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(54, 53, 53, 0.1);
     display: inline-block;
 }
 
@@ -454,95 +423,148 @@ body label img.show-userlist {
     border: none;
     padding: 5px;
     z-index: 10;
-    width: 50px; /* 可以根據需要調整寬度 */
 }
 
 .slideshow {
     height: 500px;
-
     padding: 0;
     background-color: #f1f1f1;
     position: relative;
-    
 }
 
-.custom-carousel, .carousel-inner, .carousel-item {
+.custom-carousel,
+.carousel-inner,
+.carousel-item {
     height: 100%;
-    
 }
 
 .custom-carousel {
-    width: 80%; /* 设置为所需的宽度 */
-    margin: 0 auto; /* 居中显示 */
+    width: 80%;
+    margin: 0 auto;
 }
 
-.tutorial{
+.tutorial {
     background-color: #C3B7CB;
 }
 
-
-.item-container{
+.item-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     background-color: #EBE8EC;
-   
 }
 
-
-.item{
+.item {
     margin: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-
 }
 
 .itembutton {
     position: absolute;
-    bottom: 10px; /* 将按钮容器定位到item底部 */
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: row;
-    gap: 10px; /* 添加间距以使按钮之间有一定的距离 */
+    gap: 10px;
 }
 
 .itembutton button {
-    box-shadow: 0 0 10px #c5c5c5; /* 初始状态的阴影 */
+    box-shadow: 0 0 10px #c5c5c5;
     border-radius: 80%;
     background-color: transparent;
     border: none;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* 添加过渡效果 */
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .itembutton button img {
-    
     height: 30px;
 }
 
-/* 创建阴影动画 */
 @keyframes shadow-animation {
     from {
         box-shadow: 0 0 10px #c5c5c5;
-        transform: translateY(0); /* 初始状态 */
+        transform: translateY(0);
     }
+
     to {
         box-shadow: 0 -10px 20px #c5c5c5;
-        transform: translateY(-5px); /* 目标状态 */
+        transform: translateY(-5px);
     }
 }
 
 .itembutton button:hover {
-    animation: shadow-animation 0.3s forwards; /* 应用动画效果 */
+    animation: shadow-animation 0.3s forwards;
 }
 
 .heart-clicked {
-    background-color: white !important; /* 添加 !important 以确保样式应用 */
-    
+    background-color: white !important;
 }
 
-.whiteline{
-    border:1px solid #e7e7e7;
+.whiteline {
+    border: 1px solid #e7e7e7;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .Navigationbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px;
+    }
+
+    .menu {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .navbutton,
+    .searchBox,
+    .userlist {
+        flex: 1 1 100%;
+        margin: 5px 0;
+    }
+
+    .searchBox {
+        width: auto;
+        margin-left: 0;
+        position: static;
+    }
+
+    .navbutton {
+        justify-content: center;
+        position: static;
+    }
+
+    .userlist {
+        justify-content: center;
+        position: static;
+    }
+
+    .sidebar {
+        width: 100%;
+        top: 70px;
+        border-radius: 0;
+    }
+}
+
+/* index.css */
+
+.show-userlist {
+    display: block;
+}
+
+.show-username {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.username {
+    display: none;
+    /* Initially hidden */
 }
