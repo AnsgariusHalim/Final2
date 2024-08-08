@@ -104,73 +104,104 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
   }
 });
 
-// Login route
-router.post('/login', async (req, res) => {
-  const { account, password } = req.body;
 
-  try {
-    // Find user by email or account
-    const user = await User.findOne({ $or: [{ email: account }, { account }] });
-
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.error('Authentication error:', err);
+      return res.status(500).json({ message: 'An error occurred during authentication' });
+    }
     if (!user) {
-      return res.status(400).json({ message: 'Account does not exist. Please register.' });
+      console.warn('Authentication failed:', info);
+      return res.status(401).json({ message: 'Incorrect account or password' });
     }
-
-    // Validate password
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Incorrect password. Please try again.' });
-    }
-
-    // Login successful
-    req.login(user, (err) => {
+    req.logIn(user, (err) => {
       if (err) {
-        return res.status(500).json({ message: 'Login failed. Please try again.' });
+        console.error('Login error:', err);
+        return res.status(500).json({ message: 'An error occurred during login' });
       }
-      return res.status(200).json({ message: 'Login successful.' });
+      return res.json({
+        message: 'Login successful',
+        redirectUrl: 'http://localhost:3000/', // Redirect to the homepage
+      });
     });
-  } catch (error) {
-    console.error('Error during login:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
+  })(req, res, next);
 });
 
-// Get user status
+// Google Auth callback route
+router.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: 'http://localhost:3000/login.html',
+  successRedirect: 'http://localhost:3000/',
+}));
+
+// Google Auth callback route
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Status route to check if user is authenticated
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({
-      isLoggedIn: true,
-      username: req.user.account,
-      profilePicture: req.user.profilePicture, // Include profile picture URL
-    });
+    res.json({ isLoggedIn: true, user: req.user });
   } else {
     res.json({ isLoggedIn: false });
   }
 });
 
 
-// Get image by filename
+// Serve user image by file ID
+router.get('/image/:id', async (req, res) => {
+  try {
+    const fileId = mongoose.Types.ObjectId.createFromHexString(req.params.id); // Ensure ID is converted to ObjectId
+    const bucket = new GridFSBucket(mongoose.connection.db, {
+      bucketName: 'uploads'
+    });
+
+    const downloadStream = bucket.openDownloadStream(fileId);
+
+    downloadStream.on('data', (chunk) => {
+      res.write(chunk);
+    });
+
+    downloadStream.on('error', (err) => {
+      console.error('Error downloading image:', err);
+      res.status(404).json({ message: 'Image not found' });
+    });
+
+    downloadStream.on('end', () => {
+      res.end();
+    });
+  } catch (err) {
+    console.error('Error retrieving image:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 router.get('/image/:filename', (req, res) => {
-  gridfsBucket.find({ filename: req.params.filename }).toArray((err, files) => {
+  gfs.find({ filename: req.params.filename }).toArray((err, files) => {
     if (!files || files.length === 0) {
-      return res.status(404).json({ message: 'No file exists' });
+      return res.status(404).send('File not found');
     }
 
-    const file = files[0];
     // Check if image
-    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-      const downloadStream = gridfsBucket.openDownloadStreamByName(file.filename);
-      downloadStream.pipe(res);
+    if (files[0].contentType === 'image/jpeg' || files[0].contentType === 'image/png') {
+      gfs.openDownloadStreamByName(req.params.filename).pipe(res);
     } else {
-      res.status(404).json({ message: 'Not an image' });
+      res.status(404).send('Not an image');
     }
+  });
+});
+// Logout route
+router.post('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
+    }
+    res.json({ message: 'Logout successful', redirectUrl: 'http://localhost:3000' });
   });
 });
 
 // Delete image by ID
 router.delete('/image/:id', (req, res) => {
-  gridfsBucket.delete(new mongoose.Types.ObjectId(req.params.id), (err) => {
+  gridfsBucket.delete(mongoose.Types.ObjectId.createFromHexString(req.params.id), (err) => {
     if (err) {
       console.error('Error deleting image:', err);
       return res.status(500).json({ message: 'Could not delete image' });
@@ -189,3 +220,4 @@ router.get('/google/callback',
   });
 
 module.exports = router;
+

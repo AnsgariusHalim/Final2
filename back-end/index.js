@@ -5,15 +5,20 @@ const session = require('express-session');
 const passport = require('passport');
 const { MongoClient, GridFSBucket } = require('mongodb');
 const multer = require('multer');
+const MongoStore = require('connect-mongo');
 const crypto = require('crypto');
 const path = require('path');
 const { Readable } = require('stream');
 const authRoutes = require('./routes/auth');
 const User = require('./models/user');
+const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = 3001;
+
+// MongoDB URI
 const mongoURI = 'mongodb://localhost:27017/Account';
 
 // Create a connection to MongoDB
@@ -37,14 +42,40 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session middleware
 app.use(session({
-  secret: 'your_secret_key',
+  secret: 'your_secret_key', // Replace with a secure secret
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: mongoURI }), // Use MongoDB to store sessions
+  cookie: { secure: false } // Set secure: true if using HTTPS
 }));
 
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Passport Local Strategy
+passport.use(new LocalStrategy({
+  usernameField: 'account',
+  passwordField: 'password'
+}, async (account, password, done) => {
+  try {
+    const user = await User.findOne({ $or: [{ email: account }, { account }] });
+
+    if (!user) {
+      return done(null, false, { message: 'Incorrect account or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return done(null, false, { message: 'Incorrect account or password' });
+    }
+
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+}));
 
 // Passport Google Strategy
 passport.use(new GoogleStrategy({
@@ -56,42 +87,43 @@ passport.use(new GoogleStrategy({
     try {
       let user = await User.findOne({ googleId: profile.id });
       if (user) {
-        user.profilePicture = profile.photos[0].value; // Update profile picture
-        await user.save();
+        if (!user.profilePicture && profile.photos.length) {
+          user.profilePicture = profile.photos[0].value;
+          await user.save();
+        }
         return done(null, user);
       }
 
-      user = await User.findOne({ email: profile.emails[0].value });
-      if (user) {
-        user.googleId = profile.id;
-        user.profilePicture = profile.photos[0].value; // Save Google profile picture
-        await user.save();
-        return done(null, user);
+      if (profile.emails && profile.emails.length) {
+        user = await User.findOne({ email: profile.emails[0].value });
+        if (user) {
+          user.googleId = profile.id;
+          user.profilePicture = profile.photos[0].value;
+          await user.save();
+          return done(null, user);
+        }
       }
 
       user = new User({
         googleId: profile.id,
         email: profile.emails[0].value,
         account: profile.displayName,
-        profilePicture: profile.photos[0].value, // Save Google profile picture
+        profilePicture: profile.photos.length ? profile.photos[0].value : null,
       });
       await user.save();
       return done(null, user);
     } catch (err) {
       return done(err, null);
     }
-  }
-));
-
+  }));
 // Serialize user into the session
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserialize user from the session
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).lean();
     done(null, user);
   } catch (err) {
     done(err, null);

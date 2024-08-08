@@ -1,42 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const accountInput = document.getElementById('account');
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
-    const loginBtn = document.getElementById('loginBtn');
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const account = document.getElementById('account').value;
+        const password = document.getElementById('password').value;
 
-    // Show or hide password
+        fetch('http://localhost:3001/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ account, password }),
+            credentials: 'include',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
     togglePassword.addEventListener('click', () => {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-        togglePassword.classList.toggle('fa-eye');
         togglePassword.classList.toggle('fa-eye-slash');
-    });
-
-    // Validate credentials and login
-    loginBtn.addEventListener('click', async () => {
-        const account = accountInput.value;
-        const password = passwordInput.value;
-
-        try {
-            const response = await fetch('http://localhost:3001/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ account, password })
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                window.location.href = 'index.html'; // Redirect to homepage on successful login
-            } else {
-                alert(result.message); // Show error message
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
-        }
     });
 
     // Google Sign-In

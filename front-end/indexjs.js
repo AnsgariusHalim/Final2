@@ -34,38 +34,44 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateNavbar(user) {
         const userAvatar = document.getElementById("userAvatar");
         const username = document.getElementById("username");
-        const navbutton = document.querySelector(".navbutton");
+        const loginButtons = document.querySelector(".navbutton"); // Container for login and register buttons
+        const userProfile = document.querySelector(".userlist"); // Container for user profile elements
 
         if (user.isLoggedIn) {
-            if (userAvatar) {
-                userAvatar.src = user.profilePicture
-                    ? user.profilePicture
-                    : 'pictures/user_avatar.png';
-                userAvatar.classList.add("show-userlist");
+            // Set the username
+            username.innerText = user.user.account;
+
+            // Hide the login/register buttons and show the user profile UI
+            loginButtons.style.display = 'none';
+            userProfile.style.display = 'block';
+
+            // Determine the source of the profile picture
+            if (user.user.profilePicture) {
+                // Check if it's a direct URL (likely from Google)
+                if (user.user.profilePicture.includes('http')) {
+                    userAvatar.src = user.user.profilePicture;
+                } else {
+                    // Assume it's an ID from MongoDB
+                    userAvatar.src = `http://localhost:3001/auth/image/${user.user.profilePicture}`;
+                }
+            } else {
+                // Fallback to a default image if no profile picture is available
+                userAvatar.src = 'pictures/user_avatar.png';
             }
 
-            if (username) {
-                username.innerText = user.username;
-                username.classList.add("show-username");
-            }
-
-            if (navbutton) {
-                navbutton.classList.add("hidden");
-            }
+            // Apply CSS classes if needed for visibility
+            userAvatar.classList.add("show-userlist");
+            username.classList.add("show-username");
         } else {
-            if (userAvatar) {
-                userAvatar.classList.remove("show-userlist");
-            }
-
-            if (username) {
-                username.classList.remove("show-username");
-            }
-
-            if (navbutton) {
-                navbutton.classList.remove("hidden");
-            }
+            // Reset the UI for non-logged in users
+            userAvatar.src = 'pictures/user_avatar.png';
+            userAvatar.classList.remove("show-userlist");
+            username.classList.remove("show-username");
+            username.innerText = '';
+            loginButtons.style.display = 'block';
         }
     }
+
 
     fetch('http://localhost:3001/auth/status', {
         method: 'GET',
@@ -80,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error fetching auth status:', error);
         });
 
+
     function setupDeleteButton(deleteButton) {
         deleteButton.addEventListener('click', function () {
             const item = deleteButton.closest('.item');
@@ -88,6 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderItems();
             }
         });
+    }
+    function fetchImage(filename) {
+        return `http://localhost:3001/auth/image/${filename}`;
     }
 
     function addNewItem() {
@@ -106,14 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     newItem.className = 'item';
                     const defaultName = `故事檔案${storyIndex++}`;
                     newItem.innerHTML = `
-                        <div class="item-header">
-                            <input type="text" class="image-name" placeholder="輸入圖片名稱" value="${defaultName}">
-                        </div>
-                        <button type="button" class="like"><img src="pictures/like.png" alt="Like"></button>
-                        <button type="button" class="dislike"><img src="pictures/dislike.png" alt="Dislike"></button>
-                        <div class="image-container"><img src="${e.target.result}" alt="User Image"></div>
-                        <button class="delete-button"><img src="pictures/trash.png" alt="Delete" style="width: 40px; height: 40px;"></button>
-                    `;
+              <div class="item-header">
+                <input type="text" class="image-name" placeholder="輸入圖片名稱" value="${defaultName}">
+              </div>
+              <button type="button" class="like"><img src="pictures/like.png" alt="Like"></button>
+              <button type="button" class="dislike"><img src="pictures/dislike.png" alt="Dislike"></button>
+              <div class="image-container"><img src="${e.target.result}" alt="User Image"></div>
+              <button class="delete-button"><img src="pictures/trash.png" alt="Delete" style="width: 40px; height: 40px;"></button>
+            `;
                     setupDeleteButton(newItem.querySelector('.delete-button'));
                     items.push(newItem);
                     renderItems();
@@ -224,4 +234,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Logout functionality
+    const logoutButton = document.getElementById('logout');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            fetch('http://localhost:3001/auth/logout', {
+                method: 'POST',
+                credentials: 'include',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Log the response to debug
+                    if (data.message === 'Logout successful') {
+                        window.location.href = data.redirectUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during logout:', error);
+                });
+        });
+    }
 });
