@@ -2,6 +2,12 @@ body {
     margin: 0;
 }
 
+/* Navbar specific styles */
+#navbar-container {
+    width: 100%;
+}
+
+/* index.css */
 .Navigationbar {
     background-color: #c5c5c5;
     height: 70px;
@@ -30,7 +36,6 @@ body {
     justify-content: space-between;
     margin-right: 20px;
 }
-
 
 .menu span {
     background-color: #fff;
@@ -112,7 +117,6 @@ input[type="checkbox"]:checked~.sidebar {
 #shuoButton {
     margin-left: 20px;
 }
-
 
 button {
     background-color: transparent;
@@ -346,7 +350,6 @@ ul {
     padding-inline-start: 0px;
 }
 
-
 .Navigationbar h3 {
     margin: 0;
     padding: 0;
@@ -548,23 +551,4 @@ ul {
         top: 70px;
         border-radius: 0;
     }
-}
-
-/* index.css */
-
-.show-userlist {
-    display: block;
-}
-
-.show-username {
-    display: block;
-}
-
-.hidden {
-    display: none;
-}
-
-.username {
-    display: none;
-    /* Initially hidden */
 }

@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById("menuToggle");
-    const sidebar = document.getElementById("sidebar");
-    const userCheckbox = document.getElementById("userCheckbox");
-    const userSidebar = document.getElementById("userSidebar");
     const searchForm = document.getElementById("searchForm");
     const searchInput = document.getElementById("searchInput");
     const itemsPerPage = 8;
@@ -10,82 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let items = [];
     let manageMode = false;
     let storyIndex = 1;
-
-    if (menuToggle) {
-        menuToggle.addEventListener("change", function () {
-            if (this.checked) {
-                sidebar.classList.add("show-sidebar");
-            } else {
-                sidebar.classList.remove("show-sidebar");
-            }
-        });
-    }
-
-    if (userCheckbox) {
-        userCheckbox.addEventListener("change", function () {
-            if (this.checked) {
-                userSidebar.classList.add("show-userSidebar");
-            } else {
-                userSidebar.classList.remove("show-userSidebar");
-            }
-        });
-    }
-
-    function updateNavbar(user) {
-        const userAvatar = document.getElementById("userAvatar");
-        const username = document.getElementById("username");
-        const loginButtons = document.querySelector(".navbutton"); // Container for login and register buttons
-        const userProfile = document.querySelector(".userlist"); // Container for user profile elements
-
-        if (user.isLoggedIn) {
-            // Set the username
-            username.innerText = user.user.account;
-
-            // Hide the login/register buttons and show the user profile UI
-            loginButtons.style.display = 'none';
-            userProfile.style.display = 'block';
-
-            // Determine the source of the profile picture
-            if (user.user.profilePicture) {
-                // Check if it's a direct URL (likely from Google)
-                if (user.user.profilePicture.includes('http')) {
-                    userAvatar.src = user.user.profilePicture;
-                } else {
-                    // Assume it's an ID from MongoDB
-                    userAvatar.src = `http://localhost:3001/auth/image/${user.user.profilePicture}`;
-                }
-            } else {
-                // Fallback to a default image if no profile picture is available
-                userAvatar.src = 'pictures/user_avatar.png';
-            }
-
-            // Apply CSS classes if needed for visibility
-            userAvatar.classList.add("show-userlist");
-            username.classList.add("show-username");
-        } else {
-            // Reset the UI for non-logged in users
-            userAvatar.src = 'pictures/user_avatar.png';
-            userAvatar.classList.remove("show-userlist");
-            username.classList.remove("show-username");
-            username.innerText = '';
-            loginButtons.style.display = 'block';
-        }
-    }
-
-
-    fetch('http://localhost:3001/auth/status', {
-        method: 'GET',
-        credentials: 'include',
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Log the response to debug
-            updateNavbar(data);
-        })
-        .catch(error => {
-            console.error('Error fetching auth status:', error);
-        });
-
 
     function setupDeleteButton(deleteButton) {
         deleteButton.addEventListener('click', function () {
@@ -95,9 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderItems();
             }
         });
-    }
-    function fetchImage(filename) {
-        return `http://localhost:3001/auth/image/${filename}`;
     }
 
     function addNewItem() {
@@ -235,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Logout functionality
     const logoutButton = document.getElementById('logout');
     if (logoutButton) {
         logoutButton.addEventListener('click', (event) => {
@@ -256,4 +172,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
 });
