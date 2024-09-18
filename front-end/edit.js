@@ -67,13 +67,12 @@ async function loadStory(storyId) {
 
             const regenerateButton = document.createElement('button');
             regenerateButton.textContent = 'Regenerate';
-            regenerateButton.classList.add('regenerate-button');
             regenerateButton.setAttribute('onclick', `regeneratePage(${pageNumber}, '${story._id}')`);
 
             container.appendChild(label);
             container.appendChild(textbox);
             container.appendChild(image);
-            container.appendChild(regenerateButton);
+
         });
 
         // Add the "Produce" button at the end
@@ -93,36 +92,6 @@ async function loadStory(storyId) {
         window.location.href = '/login';
     } else {
         console.error('Failed to load story:', response.statusText);
-    }
-}
-
-async function regeneratePage(pageNumber, storyId) {
-    const sentence = document.getElementById(`page${pageNumber}-text`).value;
-
-    try {
-        const response = await fetch('http://localhost:3001/api/regenerate-image', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ storyId, sentence, pageNumber }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to regenerate image.');
-        }
-
-        const result = await response.json();
-
-        if (result.success) {
-            const image = document.querySelector(`#textboxes-container img:nth-child(${pageNumber * 4 - 2})`);
-            image.src = `http://localhost:3001/api/image/${result.newImageUrl}`;
-        } else {
-            alert('Error regenerating the image.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to regenerate the image. Please try again.');
     }
 }
 

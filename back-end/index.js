@@ -21,8 +21,8 @@ const toggleSave = require('./routes/toggleSave');
 const searchRoutes = require('./routes/search');
 
 const app = express();
-const PORT = 3001;
-const mongoURI = 'mongodb://localhost:27017/Account';
+const PORT = process.env.PORT || 3001;
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Account';
 
 // Create a connection to MongoDB
 mongoose.connect(mongoURI, {
@@ -34,7 +34,7 @@ mongoose.connect(mongoURI, {
 
 // Enable CORS
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -43,6 +43,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/create-story', ensureAuthenticated, createStoryRoutes);
+app.use(express.static('public'));
+
 
 
 // Session middleware

@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const FRONTEND_URL = process.env.FRONTEND_URL || 3000;
+
 
 // Middleware to serve static files from the 'front-end' folder
 app.use(express.static(path.join(__dirname, 'front-end')));
@@ -28,6 +29,6 @@ app.get('/userbrowser', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(FRONTEND_URL, () => {
+  console.log(`Server is running on http://localhost:${FRONTEND_URL}`);
 });
