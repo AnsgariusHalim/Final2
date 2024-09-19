@@ -10,11 +10,9 @@ const Image = require('../models/image'); // Adjust the path as needed
 const pos = require('pos');
 const User = require('../models/user'); // Adjust the path if necessary
 
-
-
 // Initialize OpenAI with your API key
 const openai = new OpenAI({
-  apiKey: "sk-jWSn6yRgY0i9My4P5rxWNRIHneEq8Mvaf0El3DDvxxT3BlbkFJtcaTYY8vUsgYLmWBXW3MMHiZuETRz9BU4wFzzkK-8A",
+  apiKey: "sk-MUBeqO_mfIUtcYcWaZWUzIRdKiKfW5wJtMLLogFccfT3BlbkFJ-DlSHJvUxuWzHgQAQjxTXLhg_VbQwNZxGWfIuTh0IA",
 });
 
 const router = express.Router();
@@ -58,28 +56,42 @@ function splitSentences(text) {
   return sentences;
 }
 
-// Function to split Chinese sentences
 function splitChineseSentences(text) {
-  const sentenceRegex = /([。！？])/;
-  const parts = text.split(sentenceRegex);
-  let sentences = [];
-  let currentSentence = '';
+  // First, normalize the text by removing spaces, newlines, and unwanted characters
+  let cleanedText = text.replace(/[\s\u00A0\uFEFF]+/g, '').replace(/[\r\n]+/g, '');
 
-  parts.forEach(part => {
-    const trimmedPart = part.trim();
-    if (trimmedPart.length > 0) {
-      if (!trimmedPart.match(sentenceRegex)) {
-        currentSentence += trimmedPart;
-      } else {
-        currentSentence += trimmedPart;
-        sentences.push(currentSentence.trim());
-        currentSentence = '';
-      }
+  // Try splitting using sentence-ending punctuation marks
+  let sentences = cleanedText.split(/(?<=[。！？])/).map(sentence => sentence.trim()).filter(sentence => sentence.length > 0);
+
+  // If no sentences were found, try splitting by commas as a fallback
+  if (sentences.length === 1) {
+    console.log('Fallback: Using commas for splitting.');
+    sentences = cleanedText.split(/，/).map(sentence => sentence.trim()).filter(sentence => sentence.length > 0);
+  }
+
+  // If still only one sentence, attempt to split based on approximate lengths
+  if (sentences.length === 1) {
+    console.log('Fallback: Splitting based on approximate length.');
+    const approxLength = 20; // Set an approximate sentence length for splitting
+    let tempSentences = [];
+    for (let i = 0; i < cleanedText.length; i += approxLength) {
+      tempSentences.push(cleanedText.slice(i, i + approxLength));
     }
-  });
+    sentences = tempSentences;
+  }
 
+  console.log('Cleaned Text:', cleanedText); // Inspect the cleaned text
+  console.log('Split Sentences:', sentences); // Log the final split sentences
   return sentences;
 }
+
+
+function logUnicodeCharacters(text) {
+  for (let i = 0; i < text.length; i++) {
+    console.log(`Character: ${text[i]}, Unicode: ${text.charCodeAt(i)}`);
+  }
+}
+
 
 // Function to preprocess input text
 function preprocessInput(text) {
@@ -163,7 +175,6 @@ function sanitizePrompt(prompt) {
   return sanitizedPrompt.trim();
 }
 
-// Function to transcribe audio using Whisper
 async function transcribeAudio(filePath, fileName) {
   console.log(`Reading file from path: ${filePath}`);
 
@@ -171,14 +182,21 @@ async function transcribeAudio(filePath, fileName) {
   form.append('file', fs.createReadStream(filePath), { filename: fileName });
   form.append('model', 'whisper-1');
   form.append('response_format', 'text');
-  form.append('language', 'auto');
 
   const headers = form.getHeaders();
   headers['Authorization'] = `Bearer ${openai.apiKey}`;
 
-  const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', form, { headers });
+  try {
+    // Make the API request without specifying a language to let Whisper auto-detect
+    const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', form, { headers });
+    const transcription = response.data;
+    console.log('Transcription:', transcription);
 
-  return response.data;
+    return transcription;
+  } catch (error) {
+    console.error('Transcription error:', error.response ? error.response.data : error.message);
+    throw error;
+  }
 }
 
 // Function to generate images
@@ -315,29 +333,39 @@ router.post('/process-story', ensureAuthenticated, upload.single('audio'), async
 
     let sentences = [];
     let isChinese = false;
+    let transcription = '';
 
     if (storyText) {
+      // Detect if the input text is Chinese
       isChinese = isChineseText(storyText);
-      if (isChinese) {
-        sentences = splitChineseSentences(storyText);
-      } else {
-        sentences = splitSentences(storyText);
-      }
+      sentences = isChinese ? splitChineseSentences(storyText) : splitSentences(storyText);
     } else if (req.file) {
-      const transcription = await transcribeAudio(req.file.path, req.file.originalname);
+      transcription = await transcribeAudio(req.file.path, req.file.originalname);
+
+      // Debug: Log all characters in the transcription
+      console.log('Logging Unicode characters in transcription:');
+      logUnicodeCharacters(transcription);
+
+      // Check if the transcription contains Chinese characters
       isChinese = isChineseText(transcription);
-      if (isChinese) {
-        sentences = splitChineseSentences(transcription);
-      } else {
-        sentences = splitSentences(transcription);
-      }
+      console.log(`Is Chinese: ${isChinese}`);
+
+      // Split the transcription into sentences based on the detected language
+      sentences = isChinese ? splitChineseSentences(transcription) : splitSentences(transcription);
+      console.log('Split Sentences:', sentences);
     } else {
       return res.status(400).json({ error: 'No story text or audio provided.' });
+    }
+
+    // Check if sentences array is populated
+    if (sentences.length === 0) {
+      return res.status(400).json({ error: 'No sentences found in the transcription.' });
     }
 
     // Generate a summary based on the number of sentences
     const summary = await generateSummary(sentences);
 
+    // Generate the cover image
     const coverPrompt = `Book cover image, based on the entire story: "${title}", without any text`;
     const coverImageId = await generateImage(coverPrompt);
 
@@ -346,6 +374,7 @@ router.post('/process-story', ensureAuthenticated, upload.single('audio'), async
     // Determine 1 to 2 genres for the story
     const genres = await determineGenre(storyText || transcription);
 
+    // Process each sentence
     for (let i = 0; i < sentences.length; i++) {
       const sentence = sentences[i];
       let prompt = processInput(sentence, isChinese);
@@ -357,16 +386,21 @@ router.post('/process-story', ensureAuthenticated, upload.single('audio'), async
 
       prompt += `, ${genres.join(', ')}, best quality, masterpiece, no text`;
 
+      // Generate an image for each sentence
       const imageId = await generateImage(prompt);
+      console.log(`Generated image for sentence ${i + 1}: ${sentence}`);
 
+      // Push the sentence and image into the story content
       storyContent.push({ sentence, imageUrl: imageId });
 
+      // Pause after every 5 images to respect rate limits
       if ((i + 1) % 5 === 0) {
         console.log(`Pausing for 30 seconds after generating ${i + 1} images...`);
         await delay(30000);
       }
     }
 
+    // Save the story in the database
     const story = new Story({
       title,
       author: authorName,
@@ -387,6 +421,10 @@ router.post('/process-story', ensureAuthenticated, upload.single('audio'), async
     res.status(500).json({ error: 'Failed to process the story.' });
   }
 });
+
+
+
+
 router.get('/images', async (req, res) => {
   try {
     const images = await Image.find(); // Fetch all images from the database
